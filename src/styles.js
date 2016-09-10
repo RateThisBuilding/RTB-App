@@ -9,6 +9,7 @@ const TABMENUBARHEIGHT = 50;
 export default StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
     // justifyContent: "center",
     // alignItems: "center",
     margin: 10,
@@ -57,5 +58,27 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems:'flex-end',
+  },
+  formTitle: {
+    marginTop: 10,
+    color: '#000000',
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
+  formLabel: {
+    marginTop: 10,
+    color: 'grey'
+  },
+  selectedImageDimensions: {
+    width: 100,
+    height:100
+  },
+  selectedImagesBarPreview: {
+    marginTop: 10,
+    flexWrap: 'wrap',
+    flex:1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+
   }
 })
