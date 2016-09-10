@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
-import { View, TextInput, Text } from 'react-native'
+import { ScrollView, View, TextInput, Text } from 'react-native'
+import dismissKeyboard from 'dismissKeyboard'
 import { MKTextField } from 'react-native-material-kit'
+import StarRating from 'react-native-star-rating'
+
+
+
 
 import Styles from '../styles'
 
@@ -9,36 +14,47 @@ import Styles from '../styles'
 export default class AddReview extends Component {
   constructor(props){
     super(props)
-    this.getFormValues = this.getFormValues.bind(this);
-
     this.state = {
       subject: '',
       comments: '',
-      rating: null,
+      rating: 0,
     }
-  }
-  getFormValues(){
-
   }
 
   render() {
 
-    const SubjectTextField = MKTextField.textfield()
-      // .withPlaceholder('Subject')
-      .withStyle({marginTop: 10, height: 40})
-      .build();
-
     return (
-      <View style={Styles.container}>
-        <Text style={{marginTop: 10, color: 'grey'}}>Subject</Text>
-        <SubjectTextField />
-        <Text style={{marginTop: 10, color: 'grey'}}>Rating</Text>
+      <ScrollView >
+        <View style={Styles.container}>
+          <Text style={{marginTop: 10, color: 'grey'}}>Subject</Text>
+          <MKTextField
+            style={{marginTop: 10, height: 40}}
+            onTextChange={(e)=>{this.setState({subject:e})}}
+            />
+          <Text style={{marginTop: 10, color: 'grey'}}>Rating</Text>
+          <View style={{marginTop: 10}}>
+            <StarRating
+              disable={false}
+              maxStars={5}
+              rating={this.state.rating}
+              emptyStar={'ios-star-outline'}
+              fullStar={'ios-star'}
+              halfStar={'ios-star-half'}
+              iconSet={'Ionicons'}
+              selectedStar={(rating) => {this.setState({rating: rating})}}
+              starColor={'red'}
+              emptyStarColor={'red'}
+            />
+          </View>
+          <Text style={{marginTop: 10, color: 'grey'}}>Comments</Text>
+          <MKTextField
+            multiline={true}
+            style={{marginTop: 10, height: 100}}
+            onTextChange={(e)=>{this.setState({comments:e});}}
+            />
 
-        {/* <Form ref="form" type={Review}/>
-        <TouchableHighlight onPress={this.getFormValues} underlayColor='#99d9f4'>
-          <Text>Try me!</Text>
-        </TouchableHighlight> */}
-      </View>
+        </View>
+      </ScrollView>
     );
   }
 }

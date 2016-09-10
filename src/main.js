@@ -24,7 +24,7 @@ export default class Main extends Component {
   render() {
     return (
       <Router>
-        <Scene key="root">
+        <Scene key="root" backButtonTextStyle={{color: 'red'}}>
           <Scene key="tabbar" tabs={true} style={Styles.tabMenuBarStyles}>
             <Scene key="buildingsTab" selectedIconStyle={Styles.tabIconSelected} initial={true}  icon={Tab_HomeIcon}>
               <Scene key="buildings" component={Buildings} title="Buildings" />
