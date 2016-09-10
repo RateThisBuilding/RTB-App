@@ -10,11 +10,14 @@ import NavigationBar from 'react-native-navbar';
 import { Scene, Router } from 'react-native-router-flux';
 
 import Styles from './styles'
-import Buildings from './components/buildings'
-import Messages from './components/messages'
-import CreateListing from './components/createListing'
-import Profile from './components/profile'
-import TabIcon from './components/tabicon';
+import Buildings from './scenes/buildings'
+import Messages from './scenes/messages'
+import CreateListing from './scenes/createListing'
+import Profile from './scenes/profile'
+import AddReview from './scenes/addReview'
+
+
+import TabIcon, { Tab_HomeIcon, Tab_MessageIcon, Tab_NewListingIcon, Tab_ProfileIcon } from './components/tabicon';
 
 
 export default class Main extends Component {
@@ -22,11 +25,14 @@ export default class Main extends Component {
     return (
       <Router>
         <Scene key="root">
-          <Scene key="tabbar" tabs={true}>
-            <Scene key="buildings" hideNavBar={false} initial={true} component={Buildings} title="Buildings" icon={TabIcon}/>
-            <Scene key="messages" hideNavBar={false} component={Messages} title="Messages" icon={TabIcon}/>
-            <Scene key="new" hideNavBar={false} component={CreateListing} title="New" icon={TabIcon}/>
-            <Scene key="profile" hideNavBar={false} component={Profile} title="Profile" icon={TabIcon}/>
+          <Scene key="tabbar" tabs={true} style={Styles.tabMenuBarStyles}>
+            <Scene key="buildingsTab" selectedIconStyle={Styles.tabIconSelected} initial={true}  icon={Tab_HomeIcon}>
+              <Scene key="buildings" component={Buildings} title="Buildings" />
+              <Scene key="review" component={AddReview} title="Add a Review"/>
+            </Scene>
+            <Scene key="messages" selectedIconStyle={Styles.tabIconSelected} hideNavBar={false} component={Messages} title="Messages" icon={Tab_MessageIcon}/>
+            <Scene key="new" selectedIconStyle={Styles.tabIconSelected} hideNavBar={false} component={CreateListing} title="New Listing" icon={Tab_NewListingIcon}/>
+            <Scene key="profile" selectedIconStyle={Styles.tabIconSelected} hideNavBar={false} component={Profile} title="Profile" icon={Tab_ProfileIcon}/>
           </Scene>
         </Scene>
       </Router>

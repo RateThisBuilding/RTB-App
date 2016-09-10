@@ -1,34 +1,61 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
-const fullWidth = Dimensions.get('window').width;
-const fullHeight = Dimensions.get('window').height;
+const FULLWIDTH = Dimensions.get('window').width;
+const FULLHEIGHT = Dimensions.get('window').height;
+
+const NAVBARHEIGHT = 64;
+const TABMENUBARHEIGHT = 50;
 
 export default StyleSheet.create({
   container: {
     flex: 1,
     // justifyContent: "center",
     // alignItems: "center",
-    marginTop : 64,
-    marginBottom : 50
+    margin: 10,
+    marginTop : NAVBARHEIGHT,
+    marginBottom : TABMENUBARHEIGHT
   },
-  tabItem: {
+  tabMenuBarStyles: {
+    backgroundColor: '#ffffff',
+    shadowOpacity: 0.2,
+    shadowOffset: { height: -1 }
   },
-  tabItemSelected: {
-    color: '#ff0000',
-  },
-  tabItemSelectedIcon: {
+  tabIconSelected: {
     borderBottomWidth:2,
-    borderBottomColor:'#ff0000'
+    borderBottomColor:'#FF0000'
+  },
+  buildingsListStyle: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent:'center'
   },
   buildingComponent:{
-    width: fullWidth*.5,
-    height: fullHeight*.25,
+    width: FULLWIDTH*.43,
+    height: FULLHEIGHT*.30,
     flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
+    margin: 5,
+    padding: 5,
+
+    // Material card styling
+    borderRadius: 2,
+    shadowOpacity: 0.5,
+    shadowOffset: {
+      height: 1,
+      width: 1
+    },
+    shadowColor: '#000000'
   },
   buildingImage: {
-    width:fullWidth*.45,
-    height:fullHeight*.20
+    width:FULLWIDTH*.40,
+    height:FULLHEIGHT*.20
+  },
+  buildingComponentButtons: {
+    width: FULLWIDTH*.40,
+    height: 10,
+    flex:1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems:'flex-end',
   }
 })

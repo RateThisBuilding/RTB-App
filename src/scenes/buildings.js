@@ -4,17 +4,13 @@ import { Scene } from 'react-native-router-flux';
 
 
 import Styles from '../styles'
-import TabIcon from './tabicon'
-import Building from './building'
+import TabIcon from '../components/tabicon'
+import Building from '../components/building'
 
 import testData from '../../data/testBuildings'
 
 const fullWidth = Dimensions.get('window').width;
-const listStyle = {
-  flexDirection: 'row',
-  flexWrap: 'wrap',
-  justifyContent:'center'
-}
+
 
 export default class Buildings extends Component {
   constructor(props){
@@ -26,18 +22,13 @@ export default class Buildings extends Component {
     };
   }
   render() {
-  return (
-    <View style={Styles.container}>
-      <Text> {this.state.page} </Text>
-    <ListView
-      contentContainerStyle={listStyle}
-      dataSource={this.state.testData}
-      renderRow={(rowData)=> <Building building={rowData}/>} />
-
-
-
-    </View>
-
-  );
-}
+    return (
+      <View style={Styles.container}>
+        <ListView
+          contentContainerStyle={Styles.buildingsListStyle}
+          dataSource={this.state.testData}
+          renderRow={(rowData)=> <Building building={rowData}/>} />
+      </View>
+    );
+  }
 }

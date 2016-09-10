@@ -1,37 +1,47 @@
 import React, { Component } from 'react';
 import { View, Text, Image } from 'react-native'
-import { MKButton, MKColor, getTheme } from 'react-native-material-kit'
+import { MKButton, MKColor } from 'react-native-material-kit'
+import { Actions } from 'react-native-router-flux'
 
 import Styles from '../styles'
 
-const theme = getTheme();
-const BuildingImage = 'https://upload.wikimedia.org/wikipedia/commons/0/0e/B-B-and-T-Building-20080321.jpeg';
-
-const ReviewButton = MKButton.flatButton()
-  .withText('Add a Review')
-  .build();
-const RentButton = MKButton.flatButton()
-    .withText('Rent Now')
-    .build();
-
+const BuildingImage = 'https://upload.wikimedia.org/wikipedia/commons/0/0e/B-B-and-T-Building-20080321.jpeg'
 
 
 
 export default class Building extends Component{
   constructor(props){
     super(props);
-    console.log(props);
+
+  }
+  componentWillMount() {
+    this.setState({
+      building: this.props.building
+    })
   }
   render() {
+    const _building = this.state.building;
+    const ReviewButton = MKButton.flatButton()
+      .withTextStyle({ color: 'teal', fontWeight: 'bold', fontSize: 11})
+      .withText('Add a Review')
+      .withOnPress(() => {
+        Actions.review({ building:_building });
+      })
+      .build();
+    const RentButton = MKButton.flatButton()
+      .withTextStyle({ color: 'green', fontWeight: 'bold', fontSize: 11})
+      .withText('Rent Now')
+      .build();
+
     return (
       <View style={Styles.buildingComponent}>
+        <Text style={{fontSize:11, fontWeight:'bold'}}>{_building.title}</Text>
         <Image source={{uri: BuildingImage}} style={Styles.buildingImage} />
-        <Text>{this.props.building.title}</Text>
-        <Text>☆☆☆</Text>
-        <View style={{flex:1, flexDirection: 'row',
-              justifyContent:'center'}}>
-          <ReviewButton style={{width:100, height: 15}}/>
-        <RentButton style={{width:70, height: 15}}/>
+        <Text style={{fontSize:10}}>☆☆☆</Text>
+        <Text style={{fontSize:9}}>{_building.address}</Text>
+        <View style={Styles.buildingComponentButtons}>
+          <ReviewButton style={{height: 15}}/>
+          <RentButton style={{height: 15}}/>
         </View>
       </View>
     );
