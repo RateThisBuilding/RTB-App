@@ -6,6 +6,14 @@ const FULLHEIGHT = Dimensions.get('window').height;
 const NAVBARHEIGHT = 64;
 const TABMENUBARHEIGHT = 50;
 
+export const COLORS =  {
+  THEME: '#FF6822',
+  SECONDARY: '#46AEFF',
+  BLACK: '#000000',
+  WHITE: '#FFFFFF',
+  STAR: '#FFE12C'
+}
+
 export default StyleSheet.create({
   container: {
     flex: 1,
@@ -23,7 +31,7 @@ export default StyleSheet.create({
   },
   tabIconSelected: {
     borderBottomWidth:2,
-    borderBottomColor:'#FF0000'
+    borderBottomColor: COLORS.THEME
   },
   buildingsListStyle: {
     flexDirection: 'row',
@@ -49,14 +57,17 @@ export default StyleSheet.create({
   },
   buildingImage: {
     width:FULLWIDTH*.40,
-    height:FULLHEIGHT*.20
+    height:FULLHEIGHT*.20,
+    marginTop: 2,
+    marginBottom: 2,
+
   },
   buildingComponentButtons: {
     width: FULLWIDTH*.40,
     height: 10,
     flex:1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems:'flex-end',
   },
   formTitle: {
@@ -79,6 +90,5 @@ export default StyleSheet.create({
     flex:1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-
   }
 })

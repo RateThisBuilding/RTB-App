@@ -11,22 +11,44 @@ import testData from '../../data/testBuildings'
 
 const fullWidth = Dimensions.get('window').width;
 
+// async function getBuildingsFromAPI(){
+//   let response =  await
+//   return response
+// }
+const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 export default class Buildings extends Component {
+
+
   constructor(props){
     super(props);
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       page: 'Buildings',
-      testData: ds.cloneWithRows(testData)
+      buildingsData: ds
     };
   }
+
+  componentDidMount(){
+    const self = this
+    // const data = getBuildingsFromAPI();
+    fetch('http://ratethisbuilding.com/api/v1.0/buildings')
+    .then((response)=> response.json())
+    .then((responseJSON)=> {
+      self.setState({
+        buildingsData: self.state.buildingsData.cloneWithRows(responseJSON.data)
+      });
+    })
+    .catch((err)=>{console.log(err);});
+  }
+
+
+
   render() {
     return (
       <View style={Styles.container}>
         <ListView
           contentContainerStyle={Styles.buildingsListStyle}
-          dataSource={this.state.testData}
+          dataSource={this.state.buildingsData}
           renderRow={(rowData)=> <Building building={rowData}/>} />
       </View>
     );

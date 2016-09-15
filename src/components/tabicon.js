@@ -3,9 +3,11 @@ import { Text } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
+import { COLORS } from '../styles'
+
 const ICONSIZE = 25
-const ICONCOLORDEFAULT = '#000000'
-const ICONCOLORSELECTED = '#FF0000'
+const ICONCOLORDEFAULT = COLORS.BLACK
+const ICONCOLORSELECTED = COLORS.THEME
 
 
 export default class TabIcon extends Component {

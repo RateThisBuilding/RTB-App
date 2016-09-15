@@ -7,7 +7,7 @@ import StarRating from 'react-native-star-rating'
 import { Platform } from 'react-native'
 import ImagePicker from 'react-native-image-crop-picker'
 
-import Styles from '../styles'
+import Styles, { COLORS } from '../styles'
 
 class FormLabelText extends Component {
   render() {
@@ -46,14 +46,12 @@ export default class AddReview extends Component {
       Images = null
     }
     return (
+      // TODO: Reorganize the elements here into smaller ones
       <View style={[Styles.container]}>
         <ScrollView>
-          <Text style={Styles.formTitle}> {this.props.building.title} </Text>
-          <FormLabelText text="Subject" />
-          <MKTextField
-            style={{marginTop: 10, height: 40}}
-            onTextChange={(e)=>{this.setState({subject:e})}}
-            />
+          {/* Title */}
+          <Text style={Styles.formTitle}> Review: {this.props.building.title} </Text>
+          {/* Rating */}
           <FormLabelText text="Rating" />
           <View style={{marginTop: 10}}>
             <StarRating
@@ -65,25 +63,33 @@ export default class AddReview extends Component {
               halfStar={'ios-star-half'}
               iconSet={'Ionicons'}
               selectedStar={(rating) => {this.setState({rating: rating})}}
-              starColor={'red'}
-              emptyStarColor={'red'}
+              starColor={Styles.STAR}
+              emptyStarColor={Styles.STAR}
               />
           </View>
+          {/* Subject */}
+          <FormLabelText text="Subject" />
+          <MKTextField
+            style={{marginTop: 10, height: 40}}
+            onTextChange={(e)=>{this.setState({subject:e})}}
+            />
+          {/* Comments */}
           <FormLabelText text="Comments" />
           <MKTextField
             multiline={true}
             style={{marginTop: 10, height: 100}}
             onTextChange={(e)=>{this.setState({comments:e});}}
             />
+          {/* Images */}
           <FormLabelText text="Images" />
           <View style={Styles.selectedImagesBarPreview}>{Images}</View>
           <MKButton
-            backgroundColor={'#FF5555'}
+            backgroundColor={ COLORS.SECONDARY }
             shadowRadius={2}
             shadowOffset={{width:0, height:2}}
             shadowOpacity={.7}
             shadowColor="black"
-            style={{ marginTop: 10, padding: 5 }}
+            style={{ marginTop: 10, margin: 5, padding: 5 }}
             onPress={() => { this.openImagePicker(); }}
             >
             <Text pointerEvents="none"
@@ -92,9 +98,10 @@ export default class AddReview extends Component {
             </Text>
           </MKButton>
         </ScrollView>
-        <View style={{justifyContent: 'flex-end'}}>
+        {/* Submit Button */}
+        <View style={{justifyContent: 'flex-end', marginBottom: 5}}>
           <MKButton
-            backgroundColor={'#0000FF'}
+            backgroundColor={COLORS.THEME}
             shadowRadius={2}
             shadowOffset={{width:0, height:2}}
             shadowOpacity={.7}

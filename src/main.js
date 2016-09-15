@@ -20,11 +20,12 @@ import AddReview from './scenes/addReview'
 import TabIcon, { Tab_HomeIcon, Tab_MessageIcon, Tab_NewListingIcon, Tab_ProfileIcon } from './components/tabicon';
 
 
+
 export default class Main extends Component {
   render() {
     return (
       <Router>
-        <Scene key="root" backButtonTextStyle={{color: 'red'}}>
+        <Scene key="root" >
           <Scene key="tabbar" tabs={true} style={Styles.tabMenuBarStyles}>
             <Scene key="buildingsTab" selectedIconStyle={Styles.tabIconSelected} initial={true}  icon={Tab_HomeIcon}>
               <Scene key="buildings" component={Buildings} title="Buildings" />
