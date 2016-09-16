@@ -47,12 +47,15 @@ export default class Building extends Component{
       .withTextStyle({ color: COLORS.THEME, fontWeight: 'bold', fontSize: 11})
       .withText('Add a Review')
       .withOnPress(() => {
-        Actions.review({ building:_building });
+        Actions.review({ building: _building });
       })
       .build();
-    const RentButton = MKButton.flatButton()
+    const DetailsButton = MKButton.flatButton()
       .withTextStyle({ color: COLORS.SECONDARY, fontWeight: 'bold', fontSize: 11})
       .withText('Details')
+      .withOnPress(() => {
+        Actions.buildingDetails({ title:_building.title, building: _building});
+      })
       .build();
 
     return (
@@ -61,16 +64,14 @@ export default class Building extends Component{
         <Image
           source={{uri: `http://${PHOTO_API}/${_building.banner.uri.slice(BUILDING_BANNER_FILENAME_OFFSET)}`}}
           style={Styles.buildingImage}
-          // resizeMode={'contain'}
           />
-        {/* <Text style={{fontSize:10, color: '#000000'}}>{_building.rating}</Text> */}
         <View style={{flexDirection: 'row'}}>
           {starRendering(_building.rating)}
         </View>
         <Text numberOfLines={1} ellipsizeMode={'middle'} style={{fontSize:9}}>{_building.address}</Text>
         <View style={Styles.buildingComponentButtons}>
           {/* <ReviewButton style={{height: 15}}/> */}
-          <RentButton style={{height: 15}}/>
+          <DetailsButton style={{height: 15}}/>
         </View>
       </View>
     );

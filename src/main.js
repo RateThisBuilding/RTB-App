@@ -15,6 +15,7 @@ import Messages from './scenes/messages'
 import CreateListing from './scenes/createListing'
 import Profile from './scenes/profile'
 import AddReview from './scenes/addReview'
+import BuildingDetails from './scenes/buildingDetails'
 
 
 import TabIcon, { Tab_HomeIcon, Tab_MessageIcon, Tab_NewListingIcon, Tab_ProfileIcon } from './components/tabicon';
@@ -30,6 +31,7 @@ export default class Main extends Component {
             <Scene key="buildingsTab" selectedIconStyle={Styles.tabIconSelected} initial={true}  icon={Tab_HomeIcon}>
               <Scene key="buildings" component={Buildings} title="Buildings" />
               <Scene key="review" component={AddReview} title="Add a Review"/>
+              <Scene key="buildingDetails" component={BuildingDetails} />
             </Scene>
             <Scene key="messages" selectedIconStyle={Styles.tabIconSelected} hideNavBar={false} component={Messages} title="Messages" icon={Tab_MessageIcon}/>
             <Scene key="new" selectedIconStyle={Styles.tabIconSelected} hideNavBar={false} component={CreateListing} title="New Listing" icon={Tab_NewListingIcon}/>
