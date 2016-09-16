@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, AsyncStorage } from 'react-native'
 import { MKButton, MKColor } from 'react-native-material-kit'
 import { Actions } from 'react-native-router-flux'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -7,7 +7,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Styles, { COLORS } from '../styles'
 
 const PHOTO_API = 'ratethisbuilding.com/sites/default/files/photos';
-const BUILDING_BANNER_FILENAME_OFFSET = 15;
+const BUILDING_BANNER_FILENAME_OFFSET = 16;
 
 function starRendering(rating = 0){
   const starsJSX = [];
@@ -31,17 +31,30 @@ export default class Building extends Component{
 
   }
   componentWillMount() {
+    const building = this.props.building;
+    console.log(building);
+    try{
+      building.coordinates = JSON.parse(building.coordinates).coordinates
+      building.coordinates = {
+        latitude : building.coordinates[1],
+        longitude : building.coordinates[0]
+      }
+    }catch(err){
+      console.log(`Building ID ${building.id} could not collect cooridnates`);
+    }
+    // fetch(building.bannerImage)
+    //   .then((resp)=>resp.blob())
+    //   .then((resp)=>{
+    //     console.log(resp);
+    //     AsyncStorage.setItem(building.id,resp);
+    //   })
     this.setState({
       building: this.props.building
     })
 
-
   }
   render() {
     const _building = this.state.building;
-    if(_building.title === 'Spectrum 3'){
-      console.log(_building);
-    }
 
     const ReviewButton = MKButton.flatButton()
       .withTextStyle({ color: COLORS.THEME, fontWeight: 'bold', fontSize: 11})
@@ -62,8 +75,8 @@ export default class Building extends Component{
       <View style={Styles.buildingComponent}>
         <Text style={{fontSize:11, fontWeight:'bold'}}>{_building.title}</Text>
         <Image
-          source={{uri: `http://${PHOTO_API}/${_building.banner.uri.slice(BUILDING_BANNER_FILENAME_OFFSET)}`}}
-          style={Styles.buildingImage}
+          source={{uri: _building.banner.src}}
+          style={Styles.buildingThumbnail}
           />
         <View style={{flexDirection: 'row'}}>
           {starRendering(_building.rating)}

@@ -31,9 +31,10 @@ export default class Buildings extends Component {
   componentDidMount(){
     const self = this
     // const data = getBuildingsFromAPI();
-    fetch('http://ratethisbuilding.com/api/v1.0/buildings')
+    fetch('http://ratethisbuilding.com/api/buildings')
     .then((response)=> response.json())
     .then((responseJSON)=> {
+      console.log(responseJSON);
       self.setState({
         buildingsData: self.state.buildingsData.cloneWithRows(responseJSON.data)
       });

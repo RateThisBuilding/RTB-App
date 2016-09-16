@@ -1,7 +1,7 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
-const FULLWIDTH = Dimensions.get('window').width;
-const FULLHEIGHT = Dimensions.get('window').height;
+export const FULLWIDTH = Dimensions.get('window').width;
+export const FULLHEIGHT = Dimensions.get('window').height;
 
 const NAVBARHEIGHT = 64;
 const TABMENUBARHEIGHT = 50;
@@ -20,7 +20,6 @@ export default StyleSheet.create({
     flexDirection: 'column',
     // justifyContent: "center",
     // alignItems: "center",
-    margin: 10,
     marginTop : NAVBARHEIGHT,
     marginBottom : TABMENUBARHEIGHT
   },
@@ -55,12 +54,15 @@ export default StyleSheet.create({
     },
     shadowColor: '#000000'
   },
-  buildingImage: {
+  buildingThumbnail: {
     width:FULLWIDTH*.40,
     height:FULLHEIGHT*.20,
     marginTop: 2,
     marginBottom: 2,
 
+  },
+  buildingBanner: {
+    height: FULLHEIGHT*.30
   },
   buildingComponentButtons: {
     width: FULLWIDTH*.40,
@@ -90,5 +92,12 @@ export default StyleSheet.create({
     flex:1,
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  buildingDetailsFloatingButtonStyle: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 30,
+    width: FULLWIDTH*.48,
+    opacity: 0.8
   }
 })
