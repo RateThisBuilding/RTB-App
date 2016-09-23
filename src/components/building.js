@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableHighlight } from 'react-native'
+import { View, Text, Image, TouchableHighlight, Animated } from 'react-native'
 import { MKButton } from 'react-native-material-kit'
 import { Actions } from 'react-native-router-flux'
 
@@ -9,8 +9,17 @@ import Styles, { COLORS } from '../styles'
 export default class Building extends Component{
   constructor(props){
     super(props);
-
+    this.state = {
+       fadeAnim: new Animated.Value(0), // init opacity 0
+     };
   }
+  componentDidMount() {
+    console.log('mounted');
+     Animated.timing(          // Uses easing functions
+       this.state.fadeAnim,    // The value to drive
+       {toValue: 1}            // Configuration
+     ).start();                // Don't forget start!
+   }
   componentWillMount() {
     const building = this.props.building;
     try{
@@ -22,12 +31,6 @@ export default class Building extends Component{
     }catch(err){
       console.log(`Building ID ${building.id} could not collect cooridnates`);
     }
-    // fetch(building.bannerImage)
-    //   .then((resp)=>resp.blob())
-    //   .then((resp)=>{
-    //     console.log(resp);
-    //     AsyncStorage.setItem(building.id,resp);
-    //   })
     this.setState({
       building: this.props.building
     })
@@ -52,8 +55,7 @@ export default class Building extends Component{
       .build();
 
     return (
-
-      <View style={Styles.buildingComponent}>
+      <Animated.View style={[Styles.buildingComponent, {opacity: this.state.fadeAnim}]}>
         <TouchableHighlight
           style={{flex: 1}}
           onPress={() => {
@@ -62,12 +64,14 @@ export default class Building extends Component{
           underlayColor={'lightgray'}
         >
           <View style={Styles.buildingComponentTouchable}>
-            <Text
-              style={{fontSize:11, fontWeight:'bold', textAlign: 'center'}}
-              adjustsFontSizeToFit={true}
-              numberOfLines={1}>
-              {_building.title}
-            </Text>
+            <View>
+              <Text
+                style={{fontSize:11, fontWeight:'bold', textAlign: 'center'}}
+                adjustsFontSizeToFit={true}
+                numberOfLines={1}>
+                {_building.title}
+              </Text>
+            </View>
             <Image
               source={{uri: _building.banner.src}}
               style={Styles.buildingThumbnail}
@@ -82,7 +86,7 @@ export default class Building extends Component{
             </View>
           </View>
         </TouchableHighlight>
-      </View>
+      </Animated.View>
     );
   }
 }

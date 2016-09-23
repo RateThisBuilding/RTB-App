@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View, ListView } from 'react-native';
+import GiftedListView from 'react-native-gifted-listview'
 
-import Styles from '../styles'
+import Styles, { FULLWIDTH } from '../styles'
 import Building from '../components/building'
 
 
@@ -33,15 +34,41 @@ export default class Buildings extends Component {
     .catch((err)=>{console.log(err);});
   }
 
-
+  _onFetch(page = 0, callback, options){
+    fetch(`http://ratethisbuilding.com/api/buildings?page=${page - 1}`)
+    .then((response)=> response.json())
+    .then((responseJSON)=> {
+      if(responseJSON.data.length === 0){
+        callback([], {allLoaded: true})
+      }else{
+        callback(responseJSON.data)
+      }
+    })
+    .catch((err)=>{console.log(err);});
+  }
 
   render() {
     return (
       <View style={Styles.container}>
-        <ListView
+        <GiftedListView
+          // initialListSize={6}
+          pageSize={6}
+          onFetch={this._onFetch}
+          pagination={true}
+          refreshable={true}
+          withSections={false}
+          enableEmptySections={true}
           contentContainerStyle={Styles.buildingsListStyle}
-          dataSource={this.state.buildingsData}
-          renderRow={(rowData)=> <Building building={rowData}/>} />
+          // dataSource={this.state.buildingsData}
+          rowView={(rowData)=> <Building building={rowData}/>}
+          refreshableTintColor="blue"
+          customStyles={{
+            paginationView: {
+              width: FULLWIDTH,
+              flex: 2,
+            },
+          }}
+        />
       </View>
     );
   }
