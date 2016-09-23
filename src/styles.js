@@ -38,10 +38,8 @@ export default StyleSheet.create({
     justifyContent:'center'
   },
   buildingComponent:{
-    width: FULLWIDTH*.43,
+    width: FULLWIDTH*.45,
     height: FULLHEIGHT*.30,
-    flex: 1,
-    alignItems: 'center',
     margin: 5,
     padding: 5,
 
@@ -53,6 +51,12 @@ export default StyleSheet.create({
       width: 1
     },
     shadowColor: '#000000'
+  },
+  buildingComponentTouchable: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-around'
   },
   buildingThumbnail: {
     width:FULLWIDTH*.40,
@@ -99,5 +103,26 @@ export default StyleSheet.create({
     height: 30,
     width: FULLWIDTH*.48,
     opacity: 0.8
+  },
+  commentContainer: {
+    position: 'relative',
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    padding: 5,
+    borderBottomWidth: 2,
+    borderBottomColor: COLORS.BLACK
+  },
+
+
+
+
+
+  // misc
+  headingsMargin: {
+    margin: 5
+  },
+  boldFont: {
+    fontWeight: 'bold'
   }
 })

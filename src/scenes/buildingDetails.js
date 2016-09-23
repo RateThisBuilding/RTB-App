@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text, Image, MapView } from 'react-native';
-import { MKButton, MKColor } from 'react-native-material-kit'
+import { MKButton } from 'react-native-material-kit'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
+import Comment from '../components/comment'
+import Styles, { COLORS, FULLHEIGHT } from '../styles'
 
-import Styles, { COLORS, FULLWIDTH } from '../styles'
-
-const TOP_BUTTON_WIDTH = FULLWIDTH*.45;
 
 // Grabbed from http://stackoverflow.com/questions/30606827/set-the-bounds-of-a-mapview
 const earthRadiusInKM = 6371,
@@ -14,94 +13,157 @@ const earthRadiusInKM = 6371,
       aspectRatio = 1
 const radiusInRad = radiusInKM / earthRadiusInKM;
 
+class FloatingButtons extends Component {
+  render(){
+    return (
+      <View style={{justifyContent: 'space-between', flexDirection: 'row', margin: 5,
+      position: 'absolute', left: 0, top: 0}}>
+        <MKButton
+          backgroundColor={COLORS.THEME}
+          style={Styles.buildingDetailsFloatingButtonStyle}
+          onPress={() => {
+            console.log('Search Vacancy');
+          }}
+        >
+          <Text style={{color: COLORS.WHITE}}>Search Vacancy...</Text>
+        </MKButton>
+        <MKButton
+          backgroundColor={COLORS.SECONDARY}
+          style={Styles.buildingDetailsFloatingButtonStyle}
+          onPress={() => {
+            console.log('List Now');
+          }}
+        >
+          <Text style={{color: COLORS.WHITE}}>List Now</Text>
+        </MKButton>
+      </View>
+    )
+  }
+}
+class InfoBlock extends Component {
+  render() {
+    return (
+      <View>
+        <Text>
+          <Ionicons color={COLORS.BLACK} name="md-home" />
+          &nbsp;&nbsp;&nbsp;
+          {this.props.address}
+        </Text>
+        <Text>
+          <Ionicons color={COLORS.BLACK} name="md-call" />
+          &nbsp;&nbsp;&nbsp;
+          {this.props.phone || "Not Provided"}
+        </Text>
+        <Text>
+          <Ionicons color={COLORS.BLACK} name="md-globe" />
+          &nbsp;&nbsp;&nbsp;
+          {this.props.website || "Not Provided"}
+        </Text>
+
+      </View>
+
+    )
+  }
+}
+InfoBlock.propTypes = {
+  address: React.PropTypes.string,
+  phone: React.PropTypes.string,
+  website: React.PropTypes.string
+}
+
 export default class BuildingDetails extends Component {
 
-  deg2rad (angle) {
-    return angle * 0.017453292519943295 // (angle / 180) * Math.PI;
+  deg2rad (angle) { return angle * 0.017453292519943295 // (angle / 180) * Math.PI;
   }
-
-  rad2deg (angle) {
-    return angle * 57.29577951308232 // angle / Math.PI * 180
+  rad2deg (angle) { return angle * 57.29577951308232 // angle / Math.PI * 180
   }
 
   constructor(props){
     super(props);
+    this.state = {
+      building : null,
+      comments : []
+    }
+  }
+  componentDidMount() {
+    fetch(`http://ratethisbuilding.com/api/comments?nid=${this.state.building.id}`)
+    .then((response)=> response.json())
+    .then((responseJSON)=> {
+      this.setState({
+        comments: responseJSON.comments
+      })
 
+
+    })
   }
   componentWillMount() {
-
+    this.setState({
+      building: this.props.building
+    })
   }
   render() {
-    const { building } = this.props;
-
-
-    const buildingRegion = {
-      latitude: building.coordinates.latitude,
-      longitude: building.coordinates.longitude,
-      latitudeDelta: aspectRatio * this.rad2deg(radiusInRad),
-      longitudeDelta: this.rad2deg(radiusInRad / Math.cos(this.deg2rad(building.coordinates.latitude)))
-    },
+    const { building } = this.state;
+    if(!building){
+      return (<View style={[Styles.container]}></View>)
+    }
+    else {
+      const buildingRegion = {
+        latitude: building.coordinates.latitude,
+        longitude: building.coordinates.longitude,
+        latitudeDelta: aspectRatio * this.rad2deg(radiusInRad),
+        longitudeDelta: this.rad2deg(radiusInRad / Math.cos(this.deg2rad(building.coordinates.latitude)))
+      },
       buildingAnnotation = {
         latitude: building.coordinates.latitude,
         longitude: building.coordinates.longitude,
         animateDrop: true,
       }
-    console.log(building);
-    return (
-      <View style={[Styles.container]}>
-        <ScrollView>
-          <Image
-            source={{uri: building.banner.src}}
-            style={Styles.buildingBanner}
+      return (
+        <View style={[Styles.container]}>
+          <ScrollView>
+            <Image
+              source={{uri: building.banner.src}}
+              style={Styles.buildingBanner}
             />
-          <View style={{margin: 15, justifyContent: 'space-around'}}>
-            <Text style={{fontSize: 50, fontFamily: 'Helvetica'}}>{building.title}</Text>
-            <Text>
-              <Ionicons color={COLORS.BLACK} name="md-home" />
-              &nbsp;&nbsp;&nbsp;
-              {building.address}
-            </Text>
-            <Text>
-              <Ionicons color={COLORS.BLACK} name="md-call" />
-              &nbsp;&nbsp;&nbsp;
-              {building.phone || "Not Provided"}
-            </Text>
-            <Text>
-              <Ionicons color={COLORS.BLACK} name="md-globe" />
-              &nbsp;&nbsp;&nbsp;
-              {building.website || "Not Provided"}
-            </Text>
-            <MapView
-              showsUserLocation={true}
-              style={{height: 200}}
-              region={buildingRegion}
-              annotations={[buildingAnnotation]}
-              />
-          </View>
-        </ScrollView>
-        <View style={{justifyContent: 'space-between', flexDirection: 'row', margin: 5,
-        position: 'absolute', left: 0, top: 0}}>
-          <MKButton
-            backgroundColor={COLORS.THEME}
-            style={Styles.buildingDetailsFloatingButtonStyle}
-            onPress={() => {
-              console.log('Search Vacancy');
-            }}
-            >
-            <Text style={{color: COLORS.WHITE}}>Search Vacancy...</Text>
-          </MKButton>
-          <MKButton
-            backgroundColor={COLORS.SECONDARY}
-            style={Styles.buildingDetailsFloatingButtonStyle}
-            onPress={() => {
-              console.log('List Now');
-            }}
-            >
-            <Text style={{color: COLORS.WHITE}}>List Now</Text>
-          </MKButton>
-        </View>
+            <View style={[{margin: 15, justifyContent: 'space-around'}]}>
+              <Text
+                numberOfLines={1}
+                adjustsFontSizeToFit={true}
+                style={[{fontSize: 35}, Styles.headingsMargin]}
+                minimumFontScale={0.7}
+              >
+                {building.title}
+              </Text>
+              <InfoBlock
+                address={building.address}
+                phone={building.phone}
+                website={building.website} />
 
-      </View>
-    )
+              <MapView
+                showsUserLocation={true}
+                style={{height: 200}}
+                region={buildingRegion}
+                annotations={[buildingAnnotation]}
+              />
+              <Text style={[{fontSize: 25, fontFamily: 'Helvetica'}, Styles.headingsMargin]}>Comments</Text>
+              <View style={{
+                maxHeight: FULLHEIGHT * 0.4,
+                backgroundColor: '#0D83FF22',
+              }}>
+                <ScrollView>
+                  {this.state.comments.map((comment) => {
+                    return <Comment key={comment.id} comment={comment}></Comment>})
+                  }
+                </ScrollView>
+              </View>
+            </View>
+          </ScrollView>
+          <FloatingButtons />
+        </View>
+      )
+    }
   }
+}
+BuildingDetails.propTypes = {
+  building: React.PropTypes.object
 }

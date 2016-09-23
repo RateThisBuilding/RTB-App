@@ -33,7 +33,7 @@ export default class Main extends Component {
               <Scene key="review" component={AddReview} title="Add a Review"/>
               <Scene key="buildingDetails" component={BuildingDetails} />
             </Scene>
-            <Scene key="messages" selectedIconStyle={Styles.tabIconSelected} hideNavBar={false} component={Messages} title="Messages" icon={Tab_MessageIcon}/>
+            {/* <Scene key="messages" selectedIconStyle={Styles.tabIconSelected} hideNavBar={false} component={Messages} title="Messages" icon={Tab_MessageIcon}/> */}
             <Scene key="new" selectedIconStyle={Styles.tabIconSelected} hideNavBar={false} component={CreateListing} title="New Listing" icon={Tab_NewListingIcon}/>
             <Scene key="profile" selectedIconStyle={Styles.tabIconSelected} hideNavBar={false} component={Profile} title="Profile" icon={Tab_ProfileIcon}/>
           </Scene>

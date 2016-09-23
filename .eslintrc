@@ -1,0 +1,17 @@
+{
+  "parser": "babel-eslint",
+  "plugins": [
+    "react"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules" : true
+    }
+  },
+  "rules": {
+    "react/jsx-indent": [2, 2],
+    "no-undef": 1
+  },
+  "extends": ["eslint:recommended", "plugin:react/recommended"]
+}
