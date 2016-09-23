@@ -35,10 +35,11 @@ export default StyleSheet.create({
   buildingsListStyle: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent:'center'
+    justifyContent:'space-between',
+    alignItems: 'center'
   },
   buildingComponent:{
-    width: FULLWIDTH*.45,
+    width: FULLWIDTH*.47,
     height: FULLHEIGHT*.30,
     margin: 5,
     padding: 5,
