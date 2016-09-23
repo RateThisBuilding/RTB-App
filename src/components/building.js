@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableHighlight } from 'react-native'
-import { MKButton, MKColor } from 'react-native-material-kit'
+import { MKButton } from 'react-native-material-kit'
 import { Actions } from 'react-native-router-flux'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 import { starRendering } from '../renderHelpers'
 import Styles, { COLORS } from '../styles'
@@ -86,4 +85,8 @@ export default class Building extends Component{
       </View>
     );
   }
+}
+
+Building.propTypes = {
+  building: React.PropTypes.object
 }
