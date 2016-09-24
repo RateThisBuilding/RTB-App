@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import { ScrollView, View, TextInput, Text, Image } from 'react-native'
-import dismissKeyboard from 'dismissKeyboard'
+import { ScrollView, View, Text, Image, Alert } from 'react-native'
 import { MKTextField, MKButton } from 'react-native-material-kit'
 import StarRating from 'react-native-star-rating'
-
-import { Platform } from 'react-native'
+import { Actions } from 'react-native-router-flux'
 import ImagePicker from 'react-native-image-crop-picker'
 
 import Styles, { COLORS } from '../styles'
@@ -16,6 +14,11 @@ class FormLabelText extends Component {
     );
   }
 }
+FormLabelText.propTypes = {
+  text: React.PropTypes.string.isRequired
+}
+
+
 
 export default class AddReview extends Component {
   constructor(props){
@@ -35,7 +38,9 @@ export default class AddReview extends Component {
     }).then(images => {
       images = images.map((image)=>({uri: image.path}))
       this.setState({ images })
-    });
+    }).catch(e => {
+      console.log(e);
+    })
   }
 
   render() {
@@ -49,6 +54,7 @@ export default class AddReview extends Component {
       // TODO: Reorganize the elements here into smaller ones
       <View style={[Styles.container]}>
         <ScrollView>
+
           {/* Title */}
           <Text style={Styles.formTitle}> Review: {this.props.building.title} </Text>
           {/* Rating */}
@@ -65,21 +71,21 @@ export default class AddReview extends Component {
               selectedStar={(rating) => {this.setState({rating: rating})}}
               starColor={Styles.STAR}
               emptyStarColor={Styles.STAR}
-              />
+            />
           </View>
           {/* Subject */}
           <FormLabelText text="Subject" />
           <MKTextField
             style={{marginTop: 10, height: 40}}
             onTextChange={(e)=>{this.setState({subject:e})}}
-            />
+          />
           {/* Comments */}
           <FormLabelText text="Comments" />
           <MKTextField
             multiline={true}
             style={{marginTop: 10, height: 100}}
             onTextChange={(e)=>{this.setState({comments:e});}}
-            />
+          />
           {/* Images */}
           <FormLabelText text="Images" />
           <View style={Styles.selectedImagesBarPreview}>{Images}</View>
@@ -89,14 +95,15 @@ export default class AddReview extends Component {
             shadowOffset={{width:0, height:2}}
             shadowOpacity={.7}
             shadowColor="black"
-            style={{ marginTop: 10, margin: 5, padding: 5 }}
+            style={{ margin: 5, marginTop: 10, padding: 5 }}
             onPress={() => { this.openImagePicker(); }}
-            >
+          >
             <Text pointerEvents="none"
               style={{color: 'white', fontWeight: 'bold',}}>
               ADD IMAGES
             </Text>
           </MKButton>
+
         </ScrollView>
         {/* Submit Button */}
         <View style={{justifyContent: 'flex-end', marginBottom: 5}}>
@@ -107,8 +114,11 @@ export default class AddReview extends Component {
             shadowOpacity={.7}
             shadowColor="black"
             style={{ marginTop: 10, padding: 5 }}
-            onPress={() => { console.log(this.state);}}
-            >
+            onPress={() => {
+              Alert.alert('Review added', 'Your review has been successfully added.')
+              Actions.pop()
+            }}
+          >
             <Text pointerEvents="none"
               style={{color: 'white', fontWeight: 'bold',}}>
               SUBMIT
@@ -118,4 +128,8 @@ export default class AddReview extends Component {
       </View>
     );
   }
+}
+
+AddReview.propTypes = {
+  building: React.PropTypes.object
 }

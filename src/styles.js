@@ -21,7 +21,9 @@ export default StyleSheet.create({
     // justifyContent: "center",
     // alignItems: "center",
     marginTop : NAVBARHEIGHT,
-    marginBottom : TABMENUBARHEIGHT
+    marginBottom : TABMENUBARHEIGHT,
+    marginRight: 5,
+    marginLeft: 5
   },
   tabMenuBarStyles: {
     backgroundColor: '#ffffff',
@@ -39,13 +41,14 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   buildingComponent:{
-    width: FULLWIDTH*.47,
+    width: FULLWIDTH*.45,
     height: FULLHEIGHT*.30,
     margin: 5,
     padding: 5,
 
     // Material card styling
     borderRadius: 2,
+    elevation: 2,
     shadowOpacity: 0.5,
     shadowOffset: {
       height: 1,
@@ -89,20 +92,23 @@ export default StyleSheet.create({
   },
   selectedImageDimensions: {
     width: 100,
-    height:100
+    height:100,
+    borderWidth: 1,
+    margin: 5,
   },
   selectedImagesBarPreview: {
     marginTop: 10,
     flexWrap: 'wrap',
     flex:1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
   },
   buildingDetailsFloatingButtonStyle: {
     alignItems: 'center',
     justifyContent: 'center',
     height: 30,
-    width: FULLWIDTH*.48,
+    flex: 1,
+    // width: FULLWIDTH*.48,
     opacity: 0.8
   },
   commentContainer: {

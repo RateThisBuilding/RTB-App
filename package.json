@@ -8,13 +8,14 @@
   "dependencies": {
     "react": "15.3.1",
     "react-native": "^0.34.0",
-    "react-native-gifted-listview": "0.0.15",
-    "react-native-image-crop-picker": "^0.8.2",
+    "react-native-gifted-listview": "github:eul721/react-native-gifted-listview",
+    "react-native-image-crop-picker": "^0.9.5",
     "react-native-material-kit": "^0.3.2",
     "react-native-navbar": "^1.5.0",
     "react-native-router-flux": "^3.35.0",
     "react-native-star-rating": "^1.0.6",
-    "react-native-vector-icons": "^2.1.0"
+    "react-native-vector-icons": "^2.1.0",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "babel-eslint": "^6.1.2",

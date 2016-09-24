@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, ScrollView, Text, Image, MapView } from 'react-native';
 import { MKButton } from 'react-native-material-kit'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import { Actions } from 'react-native-router-flux'
 
 import Comment from '../components/comment'
 import Styles, { COLORS, FULLHEIGHT } from '../styles'
@@ -101,6 +102,18 @@ export default class BuildingDetails extends Component {
       building: this.props.building
     })
   }
+
+  renderComments() {
+    return (
+
+      <ScrollView>
+        {this.state.comments.map((comment) => {
+          return <Comment key={comment.id} comment={comment}></Comment>})
+        }
+      </ScrollView>
+
+    )
+  }
   render() {
     const { building } = this.state;
     if(!building){
@@ -125,7 +138,9 @@ export default class BuildingDetails extends Component {
               source={{uri: building.banner.src}}
               style={Styles.buildingBanner}
             />
-            <View style={[{margin: 15, justifyContent: 'space-around'}]}>
+            <View style={[{justifyContent: 'space-around', alignItems: 'stretch'}]}>
+
+              {/* Titleblock */}
               <Text
                 numberOfLines={1}
                 adjustsFontSizeToFit={true}
@@ -134,28 +149,38 @@ export default class BuildingDetails extends Component {
               >
                 {building.title}
               </Text>
+
+              {/* Infoblock */}
               <InfoBlock
                 address={building.address}
                 phone={building.phone}
                 website={building.website} />
 
+              {/* Map */}
               <MapView
                 showsUserLocation={true}
                 style={{height: 200}}
                 region={buildingRegion}
                 annotations={[buildingAnnotation]}
               />
+
+              {/* // Comment section */}
               <Text style={[{fontSize: 25, fontFamily: 'Helvetica'}, Styles.headingsMargin]}>Comments</Text>
               <View style={{
                 maxHeight: FULLHEIGHT * 0.4,
                 backgroundColor: '#0D83FF22',
               }}>
-                <ScrollView>
-                  {this.state.comments.map((comment) => {
-                    return <Comment key={comment.id} comment={comment}></Comment>})
-                  }
-                </ScrollView>
+                {this.renderComments()}
               </View>
+              <MKButton
+                backgroundColor={COLORS.THEME}
+                style={[Styles.buildingDetailsFloatingButtonStyle]}
+                onPress={() => {
+                  Actions.addReview({building: building})
+                }}
+              >
+                <Text style={{color: COLORS.WHITE}}>Review this building</Text>
+              </MKButton>
             </View>
           </ScrollView>
           <FloatingButtons />
