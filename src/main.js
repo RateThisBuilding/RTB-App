@@ -23,7 +23,7 @@ export default class Main extends Component {
           <Scene key="modal" component={Modal}>
             <Scene key="tabbar" tabs={true} style={Styles.tabMenuBarStyles}>
               <Scene key="buildingsTab" selectedIconStyle={Styles.tabIconSelected} initial={true}  icon={Tab_HomeIcon}>
-                <Scene key="buildings" component={Buildings} title="Buildings" hideNavBar={true} />
+                <Scene key="buildings" component={Buildings} title="Buildings" />
                 <Scene key="buildingDetails" component={BuildingDetails} />
                 <Scene key="addReview" direction="vertical" schema="modal" component={AddReview} title="Add a Review"/>
 
