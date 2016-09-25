@@ -86,7 +86,7 @@ export default class BuildingDetails extends Component {
       comments : []
     }
   }
-  componentWillMount() {
+  componentDidMount() {
     fetch(`http://ratethisbuilding.com/api/comments?nid=${this.state.building.id}`)
     .then((response)=> response.json())
     .then((responseJSON)=> {

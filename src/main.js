@@ -19,13 +19,14 @@ export default class Main extends Component {
   render() {
     return (
       <Router>
-        <Scene key="root" >
-          <Scene key="modal" component={Modal}>
+        <Scene key="modal" component={Modal}>
+          <Scene key="root" >
             <Scene key="tabbar" tabs={true} style={Styles.tabMenuBarStyles}>
               <Scene key="buildingsTab" selectedIconStyle={Styles.tabIconSelected} initial={true}  icon={Tab_HomeIcon}>
                 <Scene key="buildings" component={Buildings} title="Buildings" />
                 <Scene key="buildingDetails" component={BuildingDetails} />
-                <Scene key="addReview" direction="vertical" schema="modal" component={AddReview} title="Add a Review"/>
+                <Scene key="addReview" direction="vertical" schema="modal"
+                  hideTabBar={true} component={AddReview} title="Add a Review"/>
 
               </Scene>
               {/* <Scene key="messages" selectedIconStyle={Styles.tabIconSelected} hideNavBar={false} component={Messages} title="Messages" icon={Tab_MessageIcon}/> */}
