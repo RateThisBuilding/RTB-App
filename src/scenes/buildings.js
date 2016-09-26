@@ -80,22 +80,8 @@ export default class Buildings extends Component {
               flex: 2,
             },
           }}
-          rowHasChanged={(r1,r2)=>{
-            r1.id !== r2.id
-          }}
-          distinctRows={(rows)=>{
-            var indentitis = {};
-            var newRows = [];
-            console.log(rows);
 
-            // for(var i = 0;i<rows.length; i++){
-            //   if(indentitis[rows[i].id]){
-            //     indentitis[rows[i].id]=true;
-            //     newRows.push(rows[i]);
-            //   }
-            // }
-            return newRows;
-          }}
+
 
         />
       </View>

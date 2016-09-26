@@ -9,9 +9,10 @@ import CreateListing from './scenes/createListing'
 import Profile from './scenes/profile'
 import AddReview from './scenes/addReview'
 import BuildingDetails from './scenes/buildingDetails'
+import BuildingSearch from './scenes/buildingSearch'
 
 
-import TabIcon, { Tab_HomeIcon, Tab_MessageIcon, Tab_NewListingIcon, Tab_ProfileIcon } from './components/tabicon';
+import TabIcon, { Tab_HomeIcon, Tab_Search, Tab_MessageIcon, Tab_NewListingIcon, Tab_ProfileIcon } from './components/tabicon';
 
 
 
@@ -23,15 +24,47 @@ export default class Main extends Component {
           <Scene key="root" >
             <Scene key="tabbar" tabs={true} style={Styles.tabMenuBarStyles}>
               <Scene key="buildingsTab" selectedIconStyle={Styles.tabIconSelected} initial={true}  icon={Tab_HomeIcon}>
-                <Scene key="buildings" component={Buildings} title="Buildings" />
-                <Scene key="buildingDetails" component={BuildingDetails} />
-                <Scene key="addReview" direction="vertical" schema="modal"
-                  hideTabBar={true} component={AddReview} title="Add a Review"/>
+                <Scene
+                  key="buildings"
+                  component={Buildings}
+                  title="Buildings"
+                />
+                <Scene
+                  key="buildingDetails"
+                  component={BuildingDetails}
+                />
+                <Scene
+                  key="addReview"
+                  direction="vertical"
+                  schema="modal"
+                  hideTabBar={true}
+                  component={AddReview}
+                  title="Add a Review"
+                />
 
               </Scene>
               {/* <Scene key="messages" selectedIconStyle={Styles.tabIconSelected} hideNavBar={false} component={Messages} title="Messages" icon={Tab_MessageIcon}/> */}
-              <Scene key="new" selectedIconStyle={Styles.tabIconSelected} hideNavBar={false} component={CreateListing} title="New Listing" icon={Tab_NewListingIcon}/>
-              <Scene key="profile" selectedIconStyle={Styles.tabIconSelected} hideNavBar={false} component={Profile} title="Profile" icon={Tab_ProfileIcon}/>
+              <Scene
+                key="buildingSearch"
+                selectedIconStyle={Styles.tabIconSelected}
+                hideNavBar={false}
+                component={BuildingSearch}
+                title="Search for building"
+                icon={Tab_Search}/>
+              <Scene
+                key="new"
+                selectedIconStyle={Styles.tabIconSelected}
+                hideNavBar={false}
+                component={CreateListing}
+                title="New Listing"
+                icon={Tab_NewListingIcon}/>
+              <Scene
+                key="profile"
+                selectedIconStyle={Styles.tabIconSelected}
+                hideNavBar={false}
+                component={Profile}
+                title="Profile"
+                icon={Tab_ProfileIcon}/>
             </Scene>
 
           </Scene>

@@ -4,6 +4,7 @@ import { MKButton } from 'react-native-material-kit'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Actions } from 'react-native-router-flux'
 
+import { Title } from '../components/typography'
 import Comment from '../components/comment'
 import Styles, { COLORS, FULLHEIGHT } from '../styles'
 
@@ -165,7 +166,7 @@ export default class BuildingDetails extends Component {
               />
 
               {/* // Comment section */}
-              <Text style={[{fontSize: 25, fontFamily: 'Helvetica'}, Styles.headingsMargin]}>Comments</Text>
+              <Title text={"Comments"} />
               <View style={{
                 maxHeight: FULLHEIGHT * 0.4,
                 backgroundColor: '#0D83FF22',

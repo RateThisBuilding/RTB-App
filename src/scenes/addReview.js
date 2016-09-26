@@ -5,19 +5,8 @@ import StarRating from 'react-native-star-rating'
 import { Actions } from 'react-native-router-flux'
 import ImagePicker from 'react-native-image-crop-picker'
 
+import { FormLabelText } from '../components/formItems'
 import Styles, { COLORS } from '../styles'
-
-class FormLabelText extends Component {
-  render() {
-    return (
-      <Text style={Styles.formLabel}>{this.props.text}</Text>
-    );
-  }
-}
-FormLabelText.propTypes = {
-  text: React.PropTypes.string.isRequired
-}
-
 
 
 export default class AddReview extends Component {

@@ -48,3 +48,11 @@ export class Tab_ProfileIcon extends Component {
     );
   }
 }
+
+export class Tab_Search extends Component {
+  render() {
+    return (
+      <MaterialIcons color={this.props.selected? ICONCOLORSELECTED : ICONCOLORDEFAULT} name="search" size={ICONSIZE} />
+    );
+  }
+}
