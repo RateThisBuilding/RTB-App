@@ -1,0 +1,20 @@
+# Uncomment this line to define a global platform for your project
+platform :ios, '8.0'
+
+target 'RateThisBuilding' do
+  # Uncomment this line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  # Pods for RateThisBuilding
+  pod 'RSKImageCropper'
+  pod 'QBImagePickerController'
+
+  target 'RateThisBuildingTests' do
+    inherit! :search_paths
+    # Pods for testing
+
+    pod 'RSKImageCropper'
+    pod 'QBImagePickerController'
+  end
+
+end

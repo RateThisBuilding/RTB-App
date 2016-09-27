@@ -11,32 +11,31 @@ const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 export default class Buildings extends Component {
 
+  getSelf(){
+    return this;
+  }
+
+
+
 
   constructor(props){
     super(props);
     this.state = {
       page: 'Buildings',
-      buildingsData: ds
+      buildingsData: ds,
+      searchActive: props.searchParams
     };
   }
 
   componentDidMount(){
-    const self = this
-    // const data = getBuildingsFromAPI();
-    // fetch('http://ratethisbuilding.com/api/buildings')
-    // .then((response)=> response.json())
-    // .then((responseJSON)=> {
-    //   self.setState({
-    //     buildingsData: self.state.buildingsData.cloneWithRows(
-    //       responseJSON.data.filter((obj)=>{return obj.address.length != "0"})
-    //     )
-    //   });
-    // })
-    // .catch((err)=>{console.log(err);});
+
+      console.log('test');
+
+  }
+  componentWillReceiveProps(props) {
   }
 
   _onFetch(page = 0, callback, options){
-    console.log(page);
     fetch(`http://ratethisbuilding.com/api/buildings?page=${page - 1}`)
     .then((response)=> response.json())
     .then((responseJSON)=> {
@@ -51,6 +50,12 @@ export default class Buildings extends Component {
   }
 
   render() {
+    if(this.props.searchParams){
+      console.log(this.props.searchParams);
+      return (
+        <View></View>
+      )
+    }
     return (
       <View style={Styles.container}>
         <GiftedListView

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { View, Text, Picker } from 'react-native'
-import { Select, Option, OptionList, updatePosition } from 'react-native-dropdown'
+import { View, Text, Picker, ScrollView } from 'react-native'
+// import Picker from 'react-native-picker'
 import { MKTextField, MKColor, MKButton } from 'react-native-material-kit'
-import { Actions } from 'react-native-router-flux'
+import { Actions, ActionConst } from 'react-native-router-flux'
 
 import { Title } from '../components/typography'
 import { FormLabelText } from '../components/formItems'
@@ -35,86 +35,77 @@ export default class BuildingSearch extends Component {
     this.state = {
       category: 1,
       address: '',
-      location: ''
+      location: ALL_AVAILABLE_LOCATIONS[0]
     }
   }
 
   componentWillMount(){
-
   }
   componentDidMount(){
-    updatePosition(this.refs['SELECT_CATEGORY']);
-    updatePosition(this.refs['SELECT_LOCATION']);
-    updatePosition(this.refs['OPTIONLIST']);
   }
 
   _getOptionList() {
     return this.refs['OPTIONLIST']
   }
 
-  _createLocationOptions() {
-    return ALL_AVAILABLE_LOCATIONS.map((location)=><Option key={location}>{location}</Option>)
-  }
 
   render() {
+
     return (
       <View style={[Styles.container]}>
-        <Title text="Search for building..." />
-        <FormLabelText text="Building Category" />
-        {/* <Picker
-          selectedValue={this.state.category}
-          onValueChange={(type) => this.setState({category: type})}
-          itemStyle={{fontSize: 25, color: 'red', textAlign: 'left', fontWeight: 'bold'}}
-          style={{}}>
-          <Picker.Item label="Apartments/Condos" value="1" />
-          <Picker.Item label="Townhome" value="2" />
-        </Picker> */}
-        <Select
-          ref="SELECT_CATEGORY"
-          optionListRef={this._getOptionList.bind(this)}
-          onSelect={(item) => {this.setState({category:item})}}
-        >
-          <Option>Apartments/Condo</Option>
-          <Option>Townhome</Option>
-        </Select>
+        <ScrollView>
+          <Title text="Search for building..." />
+          <FormLabelText text="Building Category" />
+          <Picker
+            selectedValue={this.state.category}
+            onValueChange={(type) => this.setState({category: type})}
+            itemStyle={{fontSize: 15, fontWeight: 'bold'}}
+            style={{}}>
+            <Picker.Item label="Apartments/Condos" value="1" />
+            <Picker.Item label="Townhome" value="2" />
+          </Picker>
 
-        <FormLabelText text="Address" />
-        <MKTextField
-          tintColor={MKColor.Lime}
-          textInputStyle={{color: MKColor.Orange}}
-          placeholder=""
-        />
-        <FormLabelText text="Location" />
-        <Select
-          ref="SELECT_LOCATION"
-          optionListRef={this._getOptionList.bind(this)}
-          onSelect={(location) => {this.setState({location:location})}}
-          width={300}
-        >
-          {ALL_AVAILABLE_LOCATIONS.map((location)=><Option key={location}>{location}</Option>)}
-        </Select>
-        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-          <MKButton
-            backgroundColor={COLORS.THEME}
-            shadowRadius={2}
-            shadowOffset={{width:0, height:2}}
-            shadowOpacity={.7}
-            shadowColor="black"
-            style={{ marginTop: 10, padding: 10,  }}
-            onPress={() => {
-              // Alert.alert('Review added', 'Your review has been successfully added.')
-              Actions.pop()
-            }}
-          >
-            <Text pointerEvents="none"
-              style={{color: 'white', fontWeight: 'bold',}}>
-              Search
-            </Text>
-          </MKButton>
-        </View>
 
-        {/* This needs to be the last element since otherwise it will be covered by other components */}
-        <OptionList ref="OPTIONLIST" style={{height:100}} />
+          <FormLabelText text="Address" />
+          <MKTextField
+            tintColor={MKColor.Lime}
+            textInputStyle={{color: MKColor.Orange}}
+            placeholder=""
+          />
+          <FormLabelText text="Location" />
+          <Picker
+            selectedValue={this.state.location}
+            onValueChange={(location) => this.setState({location: location})}
+            itemStyle={{fontSize: 15, fontWeight: 'bold'}}
+            style={{}}>
+            {ALL_AVAILABLE_LOCATIONS.map((location)=>
+              <Picker.Item label={location} key={location} value={location}/>
+            )}
+          </Picker>
+
+          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <MKButton
+              backgroundColor={COLORS.THEME}
+              shadowRadius={2}
+              shadowOffset={{width:0, height:2}}
+              shadowOpacity={.7}
+              shadowColor="black"
+              style={{ marginTop: 10, padding: 10,  }}
+              onPress={() => {
+                // Alert.alert('Review added', 'Your review has been successfully added.')
+                // Actions.buildingsTab({searchActive: 'active'})
+                Actions.pop({refresh: {searchParams: this.state} });
+                // Actions.buildings({searchActive: 'active'})
+              }}
+            >
+              <Text pointerEvents="none"
+                style={{color: 'white', fontWeight: 'bold',}}>
+                Search
+              </Text>
+            </MKButton>
+          </View>
+        </ScrollView>
+
       </View>
     )
   }
