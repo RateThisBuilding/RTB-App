@@ -1,8 +1,9 @@
 import * as types from './actionTypes'
 
-export function applySearchParams(){
+export function applySearchParams(searchParams){
   return {
-    type: types.APPLY_SEARCH_PARAMETERS
+    type: types.APPLY_SEARCH_PARAMETERS,
+    data: searchParams
   }
 }
 export function clearSearchParams() {

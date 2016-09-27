@@ -1,41 +1,36 @@
 import React, { Component } from 'react';
 import { View, ListView, Text } from 'react-native';
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import GiftedListView from 'react-native-gifted-listview'
 import _ from 'underscore'
 
+import { applySearchParams, clearSearchParams } from '../actions/buildingList'
 import Styles, { FULLWIDTH } from '../styles'
 import Building from '../components/building'
 
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-export default class Buildings extends Component {
-
-  getSelf(){
-    return this;
-  }
-
-
+class Buildings extends Component {
 
 
   constructor(props){
     super(props);
     this.state = {
       page: 'Buildings',
-      buildingsData: ds,
-      searchActive: props.searchParams
+      buildingsData: ds
     };
   }
 
   componentDidMount(){
 
-      console.log('test');
-
   }
   componentWillReceiveProps(props) {
+    console.log(props);
   }
 
-  _onFetch(page = 0, callback, options){
+  _onFetch(page = 0, callback, ){
     fetch(`http://ratethisbuilding.com/api/buildings?page=${page - 1}`)
     .then((response)=> response.json())
     .then((responseJSON)=> {
@@ -50,8 +45,7 @@ export default class Buildings extends Component {
   }
 
   render() {
-    if(this.props.searchParams){
-      console.log(this.props.searchParams);
+    if(this.props.searchActive){
       return (
         <View></View>
       )
@@ -85,11 +79,21 @@ export default class Buildings extends Component {
               flex: 2,
             },
           }}
-
-
-
         />
       </View>
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    searchParams: state.buildingList.searchParams,
+    searchActive: state.buildingList.searchActive
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ applySearchParams, clearSearchParams }, dispatch)
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Buildings)

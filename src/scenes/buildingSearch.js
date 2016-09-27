@@ -4,6 +4,10 @@ import { View, Text, Picker, ScrollView } from 'react-native'
 import { MKTextField, MKColor, MKButton } from 'react-native-material-kit'
 import { Actions, ActionConst } from 'react-native-router-flux'
 
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+
+import { applySearchParams } from '../actions/buildingList'
 import { Title } from '../components/typography'
 import { FormLabelText } from '../components/formItems'
 import Styles, { COLORS } from '../styles'
@@ -28,14 +32,14 @@ const ALL_AVAILABLE_LOCATIONS = [
   'Richmond - West Cambie'
 ]
 
-export default class BuildingSearch extends Component {
+class BuildingSearch extends Component {
   constructor(props){
     super(props);
 
     this.state = {
-      category: 1,
-      address: '',
-      location: ALL_AVAILABLE_LOCATIONS[0]
+      category: this.props.searchParams.category,
+      address: this.props.searchParams.address,
+      location: this.props.searchParams.location,
     }
   }
 
@@ -46,6 +50,14 @@ export default class BuildingSearch extends Component {
 
   _getOptionList() {
     return this.refs['OPTIONLIST']
+  }
+
+  _buildSearchParams() {
+    return {
+      category: this.state.category,
+      address: this.state.address,
+      location: this.state.location
+    }
   }
 
 
@@ -94,7 +106,8 @@ export default class BuildingSearch extends Component {
               onPress={() => {
                 // Alert.alert('Review added', 'Your review has been successfully added.')
                 // Actions.buildingsTab({searchActive: 'active'})
-                Actions.pop({refresh: {searchParams: this.state} });
+                this.props.applySearchParams(this._buildSearchParams())
+                Actions.pop();
                 // Actions.buildings({searchActive: 'active'})
               }}
             >
@@ -110,3 +123,15 @@ export default class BuildingSearch extends Component {
     )
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    searchParams: state.buildingList.searchParams,
+  }
+}
+
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({ applySearchParams },dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BuildingSearch)

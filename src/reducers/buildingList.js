@@ -1,24 +1,27 @@
 import * as types from '../actions/actionTypes'
 
 const initialState = {
-  params: {
+  searchParams: {
     category: 1,
     address: "",
-    location: 'Downtown - Chinatown'
-  }
+    location: 'Downtown - Chinatown',
+  },
+  searchActive: false,
 }
 
-export default function buildingsList(state = initialState, action = {}){
+export default function buildingList(state = initialState, action = {}){
   switch(action.type){
     case types.APPLY_SEARCH_PARAMETERS:
       return {
         ...state,
-        params: action.params
+        searchParams: action.data,
+        searchActive: true
       }
     case types.CLEAR_SEARCH_PARAMETERS:
       return {
         ...state,
-        params: initialState.params
+        searchParams: initialState.searchParams,
+        searchActive: false
       }
     default:
       return state
