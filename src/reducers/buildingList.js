@@ -1,10 +1,12 @@
 import * as types from '../actions/actionTypes'
 
+import LOCATION_DATA from '../../data/locations'
+
 const initialState = {
   searchParams: {
     category: 1,
     address: "",
-    location: 'Downtown - Chinatown',
+    location: LOCATION_DATA[0].value,
   },
   searchActive: false,
 }

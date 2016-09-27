@@ -13,24 +13,7 @@ import { FormLabelText } from '../components/formItems'
 import Styles, { COLORS } from '../styles'
 
 // TODO: Grab these programmatically using API
-const ALL_AVAILABLE_LOCATIONS = [
-  'Downtown - Chinatown',
-  'Downtown - City Center',
-  'Downtown - Coal Harbour',
-  'Downtown - Gastown',
-  'Downtown - West End',
-  'Downtown - Yaletown',
-  'Coquitlam - City Center',
-  'Vancouver East - Fraserview',
-  'Vancouver West - Broadway Cambie',
-  'Vancouver West - Olympic Village',
-  'Vancouver West - South Granville',
-  'Burnaby - Brentwood',
-  'Burnaby - Metrotown',
-  'Burnaby - Lougheed',
-  'Richmond - Brighouse',
-  'Richmond - West Cambie'
-]
+import LOCATION_DATA from '../../data/locations'
 
 class BuildingSearch extends Component {
   constructor(props){
@@ -73,8 +56,8 @@ class BuildingSearch extends Component {
             onValueChange={(type) => this.setState({category: type})}
             itemStyle={{fontSize: 15, fontWeight: 'bold'}}
             style={{}}>
-            <Picker.Item label="Apartments/Condos" value="1" />
-            <Picker.Item label="Townhome" value="2" />
+            <Picker.Item label="Apartments/Condos" value="2" />
+            <Picker.Item label="Townhome" value="3" />
           </Picker>
 
 
@@ -90,8 +73,8 @@ class BuildingSearch extends Component {
             onValueChange={(location) => this.setState({location: location})}
             itemStyle={{fontSize: 15, fontWeight: 'bold'}}
             style={{}}>
-            {ALL_AVAILABLE_LOCATIONS.map((location)=>
-              <Picker.Item label={location} key={location} value={location}/>
+            {LOCATION_DATA.map((location)=>
+              <Picker.Item label={location.label} key={location.value} value={location.value}/>
             )}
           </Picker>
 
