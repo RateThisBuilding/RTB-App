@@ -41,7 +41,7 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   buildingComponent:{
-    width: FULLWIDTH*.45,
+    width: FULLWIDTH*.47,
     height: FULLHEIGHT*.30,
     margin: 5,
     padding: 5,
