@@ -4,9 +4,9 @@ import LOCATION_DATA from '../../data/locations'
 
 const initialState = {
   searchParams: {
-    category: 1,
+    category: "*",
     address: "",
-    location: LOCATION_DATA[0].value,
+    location: "*",
   },
   searchActive: false,
 }

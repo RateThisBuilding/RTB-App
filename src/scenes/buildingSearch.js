@@ -56,6 +56,7 @@ class BuildingSearch extends Component {
             onValueChange={(type) => this.setState({category: type})}
             itemStyle={{fontSize: 15, fontWeight: 'bold'}}
             style={{}}>
+            <Picker.Item label="Any" value="*" />
             <Picker.Item label="Apartments/Condos" value="2" />
             <Picker.Item label="Townhome" value="3" />
           </Picker>
@@ -66,6 +67,7 @@ class BuildingSearch extends Component {
             tintColor={MKColor.Lime}
             textInputStyle={{color: MKColor.Orange}}
             placeholder=""
+            onTextChange={(e)=>{this.setState({address:e});}}
           />
           <FormLabelText text="Location" />
           <Picker

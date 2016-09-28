@@ -1,5 +1,5 @@
 export default LOCATION_DATA = [
-
+    {label: 'Any', value: '*'},
     {label: 'Downtown - Chinatown', value: 73},
     {label: 'Downtown - City Center', value: 72},
     {label: 'Downtown - Coal Harbour', value: 7},

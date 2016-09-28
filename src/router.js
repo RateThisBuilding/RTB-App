@@ -66,6 +66,7 @@ class AppRouter extends Component {
                 hideNavBar={false}
                 component={BuildingSearch}
                 title="Search for building"
+                panHandlers={null}
                 icon={Tab_Search}/>
 
             </Scene>
