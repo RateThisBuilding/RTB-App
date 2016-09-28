@@ -22,8 +22,6 @@ export default StyleSheet.create({
     // alignItems: "center",
     marginTop : NAVBARHEIGHT,
     marginBottom : TABMENUBARHEIGHT,
-    marginRight: 5,
-    marginLeft: 5
   },
   tabMenuBarStyles: {
     backgroundColor: '#ffffff',

@@ -12,6 +12,7 @@
     "react-native-gifted-listview": "github:eul721/react-native-gifted-listview",
     "react-native-image-crop-picker": "^0.9.5",
     "react-native-material-kit": "^0.3.2",
+    "react-native-modalbox": "^1.3.7",
     "react-native-router-flux": "^3.35.0",
     "react-native-star-rating": "^1.0.6",
     "react-native-vector-icons": "^2.1.0",
