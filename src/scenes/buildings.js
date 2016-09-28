@@ -25,20 +25,22 @@ class Buildings extends Component {
   }
 
   componentDidUpdate(prevProps,prevState){
-    console.log(this.props);
-    if(!this.props.searchActive)
+    if(!this.props.searchActive){
       this.refs.BUILDINGLIST._refresh();
+    }
       // if(!props.searchActive){
     //   console.log(this.refs);
     //   this.refs.BUILDINGLIST._refresh();
     // }
   }
 
+  componentWillReceiveProps(props){
+    console.log(props);
+  }
 
   _onFetch(searchActive, page = 0, callback, ){
-    console.log('onfetch Called');
-    console.log('searchActive: ', searchActive);
     if(this.props.searchActive){
+      console.log('test 1');
       const { category, address, location} = this.props.searchParams
       // const addressSearchString = address===""? "*" : `${coords.lat},${coords.long}`
       if(address === ""){
@@ -53,6 +55,7 @@ class Buildings extends Component {
           }
         })
       }else{
+        console.log('test 2');
         Geocoder.geocodeAddress(address).then(res => {
           const coords = res[0].position
           console.log(category, coords, location);
@@ -69,6 +72,7 @@ class Buildings extends Component {
         .catch((err)=>{console.log(err);});
       }
     }else{
+      console.log('test 3');
       fetch(`http://ratethisbuilding.com/api/buildings?page=${page - 1}`)
       .then((response)=> response.json())
       .then((responseJSON)=> {
