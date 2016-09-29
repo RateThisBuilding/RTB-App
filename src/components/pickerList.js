@@ -4,20 +4,22 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 
 export default class PickerList extends Component {
-  componentWillMount(){
-    console.log(this);
+  checkerboxIcon(item){
+    if(item.value==this.props.currentlySelected) return "check-box"
+    else return "check-box-outline-blank"
   }
+
   renderRow(item){
     return (
       <View style={styles.cellContainer}>
-        <TouchableHighlight onPress={this.props.onItemSelect} underlayColor="transparent">
+        <TouchableHighlight onPress={()=>{this.props.onItemSelect(item.value)}} underlayColor="transparent">
           <View style={styles.cellWrapper}>
             <View style={styles.leftCol}>
               <Text>{item.label}</Text>
             </View>
             <View style={styles.rightCol}>
               <MaterialIcons
-                name="check-box-outline-blank"
+                name={this.checkerboxIcon(item)}
                 size={20}
               />
             </View>
@@ -38,7 +40,7 @@ export default class PickerList extends Component {
         dataSource={dataSource}
         renderRow={this.renderRow.bind(this)}
         style={{alignSelf: 'stretch'}}
-        scrollEnabled={false}
+        scrollEnabled={true}
       />
     )
   }

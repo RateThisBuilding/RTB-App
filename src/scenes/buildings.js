@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { View, ListView, Text } from 'react-native';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import _ from 'underscore'
 import GiftedListView from 'react-native-gifted-listview'
+import _ from 'underscore'
 
-import { applySearchParams, clearSearchParams } from '../actions/buildingList'
+import { applySearchParams, clearSearchParams } from '../actions/buildingSearch'
 import Styles, { FULLWIDTH } from '../styles'
 import Building from '../components/building'
 import * as buildingSearchStrategies from '../helpers/searchStrategies'
@@ -24,26 +24,22 @@ class Buildings extends Component {
     };
   }
 
-  componentDidUpdate(){
-    // if(!this.props.searchActive){
-    //   this.refs.BUILDINGLIST._refresh();
-    // }
-      // if(!props.searchActive){
-    //   console.log(this.refs);
-    //   this.refs.BUILDINGLIST._refresh();
-    // }
-  }
 
   componentWillReceiveProps(nextProps){
+    const shouldUpdate = !_.isEqual(nextProps.searchParams, this.props.searchParams)
     this.setState({
-      forceUpdate: !(_.isEqual(nextProps.searchParams,this.props.searchParams))
+      forceUpdate: shouldUpdate
     })
 
   }
 
-  _onFetch(searchActive, page = 0, callback, ){
+  _onFetch(page = 0, callback, ){
     if(this.props.searchActive){
       const { category, address, location} = this.props.searchParams
+      console.log('Searching...');
+      console.log('Category: ', category);
+      console.log('Address: ', address);
+      console.log('Location: ', location);
       // const addressSearchString = address===""? "*" : `${coords.lat},${coords.long}`
       if(address === ""){
         buildingSearchStrategies.searchWithoutAddress(category, location, page, callback)
@@ -57,7 +53,7 @@ class Buildings extends Component {
   render() {
     const listView = <GiftedListView
       pageSize={6}
-      onFetch={this._onFetch.bind(this,this.props.searchActive)}
+      onFetch={this._onFetch.bind(this)}
       pagination={true}
       refreshable={true}
       withSections={true}
@@ -98,8 +94,8 @@ Buildings.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    searchParams: state.buildingList.searchParams,
-    searchActive: state.buildingList.searchActive
+    searchParams: state.buildingSearch.searchParams,
+    searchActive: state.buildingSearch.searchActive
   }
 }
 

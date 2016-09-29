@@ -3,28 +3,36 @@ import { View, Text, Picker, ScrollView, ListView } from 'react-native'
 // import Picker from 'react-native-picker'
 import { MKTextField, MKColor, MKButton } from 'react-native-material-kit'
 import { Actions } from 'react-native-router-flux'
-import Modal from 'react-native-modalbox'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import { applySearchParams } from '../actions/buildingList'
-import PickerList from '../components/pickerList'
+import { applySearchParams, updateTempParams, discardTempParams, updateParams } from '../actions/buildingSearch'
 import { Title } from '../components/typography'
 import { FormLabelText } from '../components/formItems'
-import Styles, { COLORS, FULLWIDTH, FULLHEIGHT } from '../styles'
+import CategoryPicker from '../components/categoryPicker'
+import LocationPicker from '../components/locationPicker'
+import Styles, { COLORS } from '../styles'
 
 // TODO: Grab these programmatically using API
 import LOCATION_DATA from '../../data/locations'
 
 class BuildingSearch extends Component {
+
+  static propTypes = {
+    searchParams: React.PropTypes.object,
+    tempParams: React.PropTypes.object,
+    discardTempParams: React.PropTypes.func
+  }
+
   constructor(props){
     super(props);
-
     this.state = {
       category: this.props.searchParams.category,
       address: this.props.searchParams.address,
       location: this.props.searchParams.location,
+      showCategoryListModal: false,
+      showLocationListModal: false,
     }
   }
 
@@ -33,8 +41,19 @@ class BuildingSearch extends Component {
   componentDidMount(){
   }
 
-  _getOptionList() {
-    return this.refs['OPTIONLIST']
+  _openCategorySelectionModal(){
+    this.setState({
+      showCategoryListModal: true,
+      showLocationistModal: false
+    })
+  }
+
+  _openLocationSelectionModal(){
+    this.setState({
+      showLocationListModal: true,
+      showCategoryListModal: false,
+
+    })
   }
 
   _getAvailableCategories() {
@@ -45,9 +64,20 @@ class BuildingSearch extends Component {
     ]
   }
 
+  _getAvailableLocations() {
+    return LOCATION_DATA;
+  }
+
   _selectCategory(category){
-    console.log(this);
-    // this.setState({category: category})
+    this.setState({
+      category: category
+    })
+  }
+
+  _selectLocation(location){
+    this.setState({
+      location: location
+    })
   }
 
   _buildSearchParams() {
@@ -66,21 +96,20 @@ class BuildingSearch extends Component {
         <ScrollView>
           <Title text="Search for building..." />
           <FormLabelText text="Building Category" />
-
           <MKButton
-            backgroundColor={COLORS.THEME}
+            backgroundColor={COLORS.SECONDARY}
             shadowRadius={2}
             shadowOffset={{width:0, height:2}}
             shadowOpacity={.7}
             shadowColor="black"
-            style={{ marginTop: 10, padding: 10,  }}
+            style={{ marginTop: 10, padding: 10, alignSelf: 'center' }}
             onPress={() => {
-              this.refs.testModal.open();
+              this._openCategorySelectionModal();
             }}
           >
             <Text pointerEvents="none"
               style={{color: 'white', fontWeight: 'bold',}}>
-              Open modal
+              Select Category
             </Text>
           </MKButton>
 
@@ -91,18 +120,26 @@ class BuildingSearch extends Component {
             tintColor={MKColor.Lime}
             textInputStyle={{color: MKColor.Orange}}
             placeholder=""
+            defaultValue={this.props.searchParams.address}
             onTextChange={(e)=>{this.setState({address:e});}}
           />
           <FormLabelText text="Location" />
-          <Picker
-            selectedValue={this.state.location}
-            onValueChange={(location) => this.setState({location: location})}
-            itemStyle={{fontSize: 15, fontWeight: 'bold'}}
-            style={{}}>
-            {LOCATION_DATA.map((location)=>
-              <Picker.Item label={location.label} key={location.value} value={location.value}/>
-            )}
-          </Picker>
+          <MKButton
+            backgroundColor={COLORS.SECONDARY}
+            shadowRadius={2}
+            shadowOffset={{width:0, height:2}}
+            shadowOpacity={.7}
+            shadowColor="black"
+            style={{ marginTop: 10, padding: 10, alignSelf: 'center' }}
+            onPress={() => {
+              this._openLocationSelectionModal();
+            }}
+          >
+            <Text pointerEvents="none"
+              style={{color: 'white', fontWeight: 'bold',}}>
+              Select Location
+            </Text>
+          </MKButton>
 
           <View style={{flexDirection: 'row', justifyContent: 'center'}}>
             <MKButton
@@ -113,11 +150,8 @@ class BuildingSearch extends Component {
               shadowColor="black"
               style={{ marginTop: 10, padding: 10,  }}
               onPress={() => {
-                // Alert.alert('Review added', 'Your review has been successfully added.')
-                // Actions.buildingsTab({searchActive: 'active'})
                 this.props.applySearchParams(this._buildSearchParams())
                 Actions.pop();
-                // Actions.buildings({searchActive: 'active'})
               }}
             >
               <Text pointerEvents="none"
@@ -127,49 +161,24 @@ class BuildingSearch extends Component {
             </MKButton>
           </View>
         </ScrollView>
+        {/* Consider Refactoring the pickers into containers instead */}
+        <CategoryPicker
+          categories={this._getAvailableCategories()}
+          onSelectCategory={this._selectCategory.bind(this)}
+          triggerCategoryModal={this.state.showCategoryListModal}
+          currentlySelectedCategories={this.state.category}
+          onClose={()=>{this.setState({showCategoryListModal:false})}}
 
-        <Modal
-          style={{width: FULLWIDTH*0.7, height: FULLHEIGHT*0.5}}
-          position={'center'}
-          ref={'testModal'}
-          swipeToClose={false}
-        >
-          <View style={{flex: 1, alignItems: 'center'}}>
-            <FormLabelText text="Building Category" />
-            {/* <Picker
-              selectedValue={this.state.category}
-              onValueChange={(type) => this.setState({category: type})}
-              itemStyle={{fontSize: 15, fontWeight: 'bold'}}
-              style={{}}>
-              <Picker.Item label="Any" value="*" />
-              <Picker.Item label="Apartments/Condos" value="2" />
-              <Picker.Item label="Townhome" value="3" />
-            </Picker> */}
-            <PickerList
-              items={this._getAvailableCategories()}
-              onItemSelect={this._selectCategory}
-            />
-            <MKButton
-              backgroundColor={COLORS.THEME}
-              shadowRadius={2}
-              shadowOffset={{width:0, height:2}}
-              shadowOpacity={.7}
-              shadowColor="black"
-              style={{ marginTop: 10, padding: 10,  }}
-              onPress={() => {
-
-                this.refs.testModal.close();
-              }}
-            >
-              <Text pointerEvents="none"
-                style={{color: 'white', fontWeight: 'bold',}}>
-                OK
-              </Text>
-            </MKButton>
+        />
+        <LocationPicker
+          locations={this._getAvailableLocations()}
+          onSelectLocation={this._selectLocation.bind(this)}
+          triggerLocationModal={this.state.showLocationListModal}
+          currentlySelectedLocations={this.state.location}
+          onClose={()=>{this.setState({showLocationListModal:false})}}
 
 
-          </View>
-        </Modal>
+        />
       </View>
     )
   }
@@ -177,12 +186,18 @@ class BuildingSearch extends Component {
 
 function mapStateToProps(state) {
   return {
-    searchParams: state.buildingList.searchParams,
+    searchParams: state.buildingSearch.searchParams,
+    tempParams: state.buildingSearch.tempParams
   }
 }
 
 function mapDispatchToProps(dispatch){
-  return bindActionCreators({ applySearchParams },dispatch)
+  return bindActionCreators({
+    applySearchParams,
+    discardTempParams,
+    updateTempParams,
+    updateParams
+   },dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BuildingSearch)

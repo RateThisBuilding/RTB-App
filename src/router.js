@@ -14,12 +14,16 @@ import Profile from './scenes/profile'
 import AddReview from './scenes/addReview'
 import BuildingDetails from './scenes/buildingDetails'
 import BuildingSearch from './scenes/buildingSearch'
-
 import { Tab_HomeIcon, Tab_Search, /* Tab_MessageIcon,*/ Tab_NewListingIcon, Tab_ProfileIcon } from './components/tabicon';
-
-
 // import all relevent Actions
-import { clearSearchParams } from './actions/buildingList'
+import { clearSearchParams } from './actions/buildingSearch'
+
+// TODO: Find a solution that doesn't require importing the reducer directly
+import { initialState as defaultBuildingParams } from './reducers/buildingSearch'
+import _ from 'underscore'
+
+
+
 
 
 
@@ -29,8 +33,17 @@ class AppRouter extends Component {
   _updateTitleAfterSearchActive(){
     return this.props.searchActive? 'Clear' : ' '
   }
+  componentWillReceiveProps(nextProps){
+      this.setState({
+        clearLabelVisible: nextProps.searchActive
+      })
+
+  }
   constructor(props){
     super(props)
+    this.state = {
+      clearLabelVisible: false
+    }
     this.scenes = Actions.create(
       <Scene key="modal" component={Modal}>
         <Scene key="root" >
@@ -102,7 +115,8 @@ class AppRouter extends Component {
 
 function mapStateToProps(state){
   return {
-    searchActive: state.buildingList.searchActive
+    searchActive: state.buildingSearch.searchActive,
+    searchParams: state.buildingSearch.searchParams
   }
 }
 
