@@ -61,7 +61,7 @@ export default StyleSheet.create({
     justifyContent: 'space-around'
   },
   buildingThumbnail: {
-    width:FULLWIDTH*.40,
+    width:FULLWIDTH*.37,
     height:FULLHEIGHT*.20,
     marginTop: 2,
     marginBottom: 2,

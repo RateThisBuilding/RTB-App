@@ -15,7 +15,7 @@ export function searchWithoutAddress(category, location, page, callback){
 export function search(category, address, location, page, callback){
   Geocoder.geocodeAddress(address).then(res => {
     const coords = res[0].position
-    fetch(`http://ratethisbuilding.com/api/buildings-search/${category}/${coords.lat},${coords.long}/${location}?page=${page-1}`)
+    fetch(`http://ratethisbuilding.com/api/buildings-search/${category}/${coords.lat},${coords.lng}/${location}?page=${page-1}`)
     .then(response => response.json())
     .then(responseJSON => {
       if(responseJSON.data.length === 0){
