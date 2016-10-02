@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 import Modal from 'react-native-modalbox'
-import { MKButton } from 'react-native-material-kit'
+import { Button } from './formItems'
 
-import  { COLORS, FULLWIDTH, FULLHEIGHT } from '../styles'
+import  { COLORS, FULLWIDTH, FULLHEIGHT, NAVBARHEIGHT, TABMENUBARHEIGHT } from '../styles'
 import { FormLabelText } from './formItems'
 import PickerList from './pickerList'
 
@@ -26,7 +26,7 @@ export default class LocationPicker extends Component {
   render() {
     return (
       <Modal
-        style={{width: FULLWIDTH*0.8, height: FULLHEIGHT*0.8, padding: 20}}
+        style={{width: FULLWIDTH*0.8, height: (FULLHEIGHT*0.9)-NAVBARHEIGHT-TABMENUBARHEIGHT, padding: 20}}
         position={'center'}
         ref={'locationModal'}
         swipeToClose={false}
@@ -39,20 +39,11 @@ export default class LocationPicker extends Component {
             onItemSelect={this.props.onSelectLocation}
             currentlySelected={this.props.currentlySelectedLocations}
           />
-          <MKButton
-            backgroundColor={COLORS.THEME}
-            shadowRadius={2}
-            shadowOffset={{width:0, height:2}}
-            shadowOpacity={.7}
-            shadowColor="black"
-            style={{ marginTop: 10, padding: 10,  }}
+          <Button
+            theme={1}
             onPress={this._onSaveParams.bind(this)}
-          >
-            <Text pointerEvents="none"
-              style={{color: 'white', fontWeight: 'bold',}}>
-              OK
-            </Text>
-          </MKButton>
+            buttonText={"OK"}
+          />
 
 
         </View>

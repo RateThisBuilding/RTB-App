@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 import Modal from 'react-native-modalbox'
-import { MKButton } from 'react-native-material-kit'
+import { Button } from './formItems'
 
 import  { COLORS, FULLWIDTH, FULLHEIGHT } from '../styles'
 import { FormLabelText } from './formItems'
@@ -39,20 +39,11 @@ export default class CategoryPicker extends Component {
             onItemSelect={this.props.onSelectCategory}
             currentlySelected={this.props.currentlySelectedCategories}
           />
-          <MKButton
-            backgroundColor={COLORS.THEME}
-            shadowRadius={2}
-            shadowOffset={{width:0, height:2}}
-            shadowOpacity={.7}
-            shadowColor="black"
-            style={{ marginTop: 10, padding: 10,  }}
+          <Button
+            theme={1}
             onPress={this._onSaveParams.bind(this)}
-          >
-            <Text pointerEvents="none"
-              style={{color: 'white', fontWeight: 'bold',}}>
-              OK
-            </Text>
-          </MKButton>
+            buttonText={"OK"}
+          />
 
 
         </View>

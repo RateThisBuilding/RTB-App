@@ -3,8 +3,8 @@ import { StyleSheet, Dimensions } from 'react-native';
 export const FULLWIDTH = Dimensions.get('window').width;
 export const FULLHEIGHT = Dimensions.get('window').height;
 
-const NAVBARHEIGHT = 64;
-const TABMENUBARHEIGHT = 50;
+export const NAVBARHEIGHT = 64;
+export const TABMENUBARHEIGHT = 50;
 
 export const COLORS =  {
   THEME: '#FF6822',
@@ -39,9 +39,8 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   buildingComponent:{
-    width: FULLWIDTH*.47,
-    height: FULLHEIGHT*.30,
-    flex: 1,
+    width: (FULLWIDTH*.5)-10,
+    maxHeight: FULLHEIGHT*.33,
     margin: 5,
     padding: 5,
 
@@ -56,7 +55,6 @@ export default StyleSheet.create({
     shadowColor: '#000000'
   },
   buildingComponentTouchable: {
-    flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-around'
@@ -73,11 +71,11 @@ export default StyleSheet.create({
   },
   buildingComponentButtons: {
     width: FULLWIDTH*.40,
+    margin: 5,
     height: 10,
     flex:1,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems:'flex-end',
   },
   formTitle: {
     marginTop: 10,
