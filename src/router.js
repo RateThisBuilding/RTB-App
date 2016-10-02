@@ -9,7 +9,7 @@ import { Text } from 'react-native'
 import Styles from './styles'
 import Buildings from './scenes/buildings'
 // import Messages from './scenes/messages'
-import CreateListing from './scenes/createListing'
+import AddBuilding from './scenes/addBuilding'
 import Profile from './scenes/profile'
 import AddReview from './scenes/addReview'
 import BuildingDetails from './scenes/buildingDetails'
@@ -89,8 +89,8 @@ class AppRouter extends Component {
               key="new"
               selectedIconStyle={Styles.tabIconSelected}
               hideNavBar={false}
-              component={CreateListing}
-              title="New Listing"
+              component={AddBuilding}
+              title="Add Building"
               icon={Tab_NewListingIcon}/>
             <Scene
               key="profile"

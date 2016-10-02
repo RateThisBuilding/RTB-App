@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Picker, ScrollView, ListView } from 'react-native'
+import { View, Text, ScrollView, ListView } from 'react-native'
 // import Picker from 'react-native-picker'
 import { MKTextField, MKColor, MKButton } from 'react-native-material-kit'
 import { Actions } from 'react-native-router-flux'
@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 
 import { applySearchParams, updateTempParams, discardTempParams, updateParams } from '../actions/buildingSearch'
 import { Title } from '../components/typography'
-import { FormLabelText } from '../components/formItems'
+import { FormLabelText, Button } from '../components/formItems'
 import CategoryPicker from '../components/categoryPicker'
 import LocationPicker from '../components/locationPicker'
 import Styles, { COLORS } from '../styles'
@@ -94,24 +94,16 @@ class BuildingSearch extends Component {
     return (
       <View style={[Styles.container]}>
         <ScrollView>
-          <Title text="Search for building..." />
+          <Title text="Search for Building" />
+          {/* TODO: Make the following 2 into a form group? */}
           <FormLabelText text="Building Category" />
-          <MKButton
-            backgroundColor={COLORS.SECONDARY}
-            shadowRadius={2}
-            shadowOffset={{width:0, height:2}}
-            shadowOpacity={.7}
-            shadowColor="black"
-            style={{ marginTop: 10, padding: 10, alignSelf: 'center' }}
+          <Button
             onPress={() => {
               this._openCategorySelectionModal();
             }}
-          >
-            <Text pointerEvents="none"
-              style={{color: 'white', fontWeight: 'bold',}}>
-              Select Category
-            </Text>
-          </MKButton>
+            theme={2}
+            buttonText={"Select Category"}
+          />
 
 
 
@@ -124,42 +116,21 @@ class BuildingSearch extends Component {
             onTextChange={(e)=>{this.setState({address:e});}}
           />
           <FormLabelText text="Location" />
-          <MKButton
-            backgroundColor={COLORS.SECONDARY}
-            shadowRadius={2}
-            shadowOffset={{width:0, height:2}}
-            shadowOpacity={.7}
-            shadowColor="black"
-            style={{ marginTop: 10, padding: 10, alignSelf: 'center' }}
+          <Button
             onPress={() => {
               this._openLocationSelectionModal();
             }}
-          >
-            <Text pointerEvents="none"
-              style={{color: 'white', fontWeight: 'bold',}}>
-              Select Location
-            </Text>
-          </MKButton>
-
-          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-            <MKButton
-              backgroundColor={COLORS.THEME}
-              shadowRadius={2}
-              shadowOffset={{width:0, height:2}}
-              shadowOpacity={.7}
-              shadowColor="black"
-              style={{ marginTop: 10, padding: 10,  }}
-              onPress={() => {
-                this.props.applySearchParams(this._buildSearchParams())
-                Actions.pop();
-              }}
-            >
-              <Text pointerEvents="none"
-                style={{color: 'white', fontWeight: 'bold',}}>
-                Search
-              </Text>
-            </MKButton>
-          </View>
+            theme={2}
+            buttonText={"Select Location"}
+          />
+          <Button
+            onPress={() => {
+              this.props.applySearchParams(this._buildSearchParams())
+              Actions.pop();
+            }}
+            theme={1}
+            buttonText={"Search"}
+          />
         </ScrollView>
         {/* Consider Refactoring the pickers into containers instead */}
         <CategoryPicker
@@ -168,7 +139,6 @@ class BuildingSearch extends Component {
           triggerCategoryModal={this.state.showCategoryListModal}
           currentlySelectedCategories={this.state.category}
           onClose={()=>{this.setState({showCategoryListModal:false})}}
-
         />
         <LocationPicker
           locations={this._getAvailableLocations()}
@@ -176,8 +146,6 @@ class BuildingSearch extends Component {
           triggerLocationModal={this.state.showLocationListModal}
           currentlySelectedLocations={this.state.location}
           onClose={()=>{this.setState({showLocationListModal:false})}}
-
-
         />
       </View>
     )
