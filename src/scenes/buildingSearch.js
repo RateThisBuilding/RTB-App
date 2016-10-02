@@ -7,7 +7,7 @@ import { Actions } from 'react-native-router-flux'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import { applySearchParams, updateTempParams, discardTempParams, updateParams } from '../actions/buildingSearch'
+import { applySearchParams } from '../actions/buildingSearch'
 import { Title } from '../components/typography'
 import { FormLabelText, Button } from '../components/formItems'
 import CategoryPicker from '../components/categoryPicker'
@@ -22,7 +22,6 @@ class BuildingSearch extends Component {
   static propTypes = {
     searchParams: React.PropTypes.object,
     tempParams: React.PropTypes.object,
-    discardTempParams: React.PropTypes.func
   }
 
   constructor(props){
@@ -162,9 +161,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
     applySearchParams,
-    discardTempParams,
-    updateTempParams,
-    updateParams
    },dispatch)
 }
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Text, StyleSheet } from 'react-native'
 import {  MKButton } from 'react-native-material-kit'
 
-import Styles, { COLORS }  from '../styles'
+import { COLORS }  from '../styles'
 
 export class FormLabelText extends Component {
   render() {
@@ -16,22 +16,22 @@ FormLabelText.propTypes = {
 }
 
 export class Button extends Component {
+
   static propTypes = {
     onPress: React.PropTypes.func,
     theme: React.PropTypes.number, // Either the blue or Orange
-    buttonText: React.PropTypes.string
-
-
+    buttonText: React.PropTypes.string,
+    style: React.PropTypes.object
+  }
+  static defaultProps = {
+    style: {}
   }
   render() {
     return (
       <MKButton
         backgroundColor={this.props.theme === 2? COLORS.SECONDARY: COLORS.THEME}
-        shadowRadius={2}
-        shadowOffset={{width:0, height:2}}
-        shadowOpacity={.7}
         shadowColor="black"
-        style={styles.button}
+        style={[styles.button, this.props.style]}
         onPress={this.props.onPress}
       >
         <Text pointerEvents="none"
@@ -50,6 +50,21 @@ const styles = StyleSheet.create({
     padding: 5,
     color: 'grey'
   },
-  button: { margin: 10, padding: 10, alignSelf: 'stretch' },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10,
+    margin: 10,
+    alignSelf: 'stretch',
+    flex: 1
+  },
+  floatButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 30,
+    flex: 1,
+    // width: FULLWIDTH*.48,
+    opacity: 0.8
+  },
   buttonText: {color: 'white', fontWeight: 'bold', textAlign: 'center'}
 })

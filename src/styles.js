@@ -41,6 +41,7 @@ export default StyleSheet.create({
   buildingComponent:{
     width: FULLWIDTH*.47,
     height: FULLHEIGHT*.30,
+    flex: 1,
     margin: 5,
     padding: 5,
 

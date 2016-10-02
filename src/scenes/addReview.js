@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { ScrollView, View, Text, Image, Alert } from 'react-native'
+import { ScrollView, View, Text, Image, Alert, StyleSheet } from 'react-native'
 import { MKTextField, MKButton } from 'react-native-material-kit'
 import StarRating from 'react-native-star-rating'
 import { Actions } from 'react-native-router-flux'
 import ImagePicker from 'react-native-image-crop-picker'
 
-import { FormLabelText } from '../components/formItems'
+import { FormLabelText, Button } from '../components/formItems'
 import Styles, { COLORS } from '../styles'
 
 
@@ -20,7 +20,6 @@ export default class AddReview extends Component {
     }
     this.openImagePicker = this.openImagePicker.bind(this)
   }
-
   openImagePicker() {
     ImagePicker.openPicker({
       multiple: true
@@ -48,7 +47,7 @@ export default class AddReview extends Component {
           <Text style={Styles.formTitle}> Review: {this.props.building.title} </Text>
           {/* Rating */}
           <FormLabelText text="Rating" />
-          <View style={{marginTop: 10}}>
+          <View style={styles.starPickerContainer}>
             <StarRating
               disable={false}
               maxStars={5}
@@ -78,46 +77,33 @@ export default class AddReview extends Component {
           {/* Images */}
           <FormLabelText text="Images" />
           <View style={Styles.selectedImagesBarPreview}>{Images}</View>
-          <MKButton
-            backgroundColor={ COLORS.SECONDARY }
-            shadowRadius={2}
-            shadowOffset={{width:0, height:2}}
-            shadowOpacity={.7}
-            shadowColor="black"
-            style={{ margin: 5, marginTop: 10, padding: 5 }}
-            onPress={() => { this.openImagePicker(); }}
-          >
-            <Text pointerEvents="none"
-              style={{color: 'white', fontWeight: 'bold',}}>
-              ADD IMAGES
-            </Text>
-          </MKButton>
+          <Button
+            onPress={() => {
+              this.openImagePicker();
+            }}
+            theme={2}
+            buttonText={"Add Images"}
+          />
 
-        </ScrollView>
-        {/* Submit Button */}
-        <View style={{justifyContent: 'flex-end', marginBottom: 5}}>
-          <MKButton
-            backgroundColor={COLORS.THEME}
-            shadowRadius={2}
-            shadowOffset={{width:0, height:2}}
-            shadowOpacity={.7}
-            shadowColor="black"
-            style={{ marginTop: 10, padding: 5 }}
+          {/* Submit Button */}
+          <Button
             onPress={() => {
               Alert.alert('Review added', 'Your review has been successfully added.')
               Actions.pop()
             }}
-          >
-            <Text pointerEvents="none"
-              style={{color: 'white', fontWeight: 'bold',}}>
-              SUBMIT
-            </Text>
-          </MKButton>
-        </View>
+            theme={1}
+            buttonText={"Submit"}
+          />
+        </ScrollView>
+
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  starPickerContainer: {margin: 10}
+})
 
 AddReview.propTypes = {
   building: React.PropTypes.object

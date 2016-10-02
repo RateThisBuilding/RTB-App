@@ -1,77 +1,72 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, Image, MapView } from 'react-native';
+import { View, ScrollView, Text, Image, MapView, StyleSheet } from 'react-native';
 import { MKButton } from 'react-native-material-kit'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Actions } from 'react-native-router-flux'
 
+import { Button } from '../components/formItems'
 import { Title } from '../components/typography'
 import Comment from '../components/comment'
+import InfoBlock from '../components/buildingDetails/infoBlock'
 import Styles, { COLORS, FULLHEIGHT } from '../styles'
 
-
-// Grabbed from http://stackoverflow.com/questions/30606827/set-the-bounds-of-a-mapview
-const earthRadiusInKM = 6371,
-      radiusInKM = 1,
-      aspectRatio = 1
-const radiusInRad = radiusInKM / earthRadiusInKM;
-
+// TODO: Consider factoring the floating buttons out of this file
 class FloatingButtons extends Component {
   render(){
     return (
-      <View style={{justifyContent: 'space-between', flexDirection: 'row', margin: 5,
-      position: 'absolute', left: 0, top: 0}}>
-        <MKButton
+      <View style={{
+        justifyContent: 'space-around', flexDirection: 'row',
+        marginTop: 5,
+        position: 'absolute',
+        left: 0,
+        top: 0
+      }}>
+        {/* <MKButton
           backgroundColor={COLORS.THEME}
           style={Styles.buildingDetailsFloatingButtonStyle}
           onPress={() => {
+          console.log('Search Vacancy');
+          }}
+          >
+          <Text style={{color: COLORS.WHITE}}>Search Vacancy...</Text>
+        </MKButton> */}
+        <Button
+          onPress={() => {
             console.log('Search Vacancy');
           }}
-        >
-          <Text style={{color: COLORS.WHITE}}>Search Vacancy...</Text>
-        </MKButton>
-        <MKButton
+          theme={1}
+          buttonText={"Search Vacancy..."}
+          style={{
+            opacity: 0.8,
+            margin: 0
+          }}
+        />
+        {/* <MKButton
           backgroundColor={COLORS.SECONDARY}
           style={Styles.buildingDetailsFloatingButtonStyle}
           onPress={() => {
+          console.log('List Now');
+          }}
+          >
+          <Text style={{color: COLORS.WHITE}}>List Now</Text>
+        </MKButton> */}
+        <Button
+          onPress={() => {
             console.log('List Now');
           }}
-        >
-          <Text style={{color: COLORS.WHITE}}>List Now</Text>
-        </MKButton>
+          theme={2}
+          buttonText={"List Now"}
+          style={{
+            opacity: 0.8,
+            margin: 0
+          }}
+        />
       </View>
     )
   }
 }
-class InfoBlock extends Component {
-  render() {
-    return (
-      <View>
-        <Text>
-          <Ionicons color={COLORS.BLACK} name="md-home" />
-          &nbsp;&nbsp;&nbsp;
-          {this.props.address}
-        </Text>
-        <Text>
-          <Ionicons color={COLORS.BLACK} name="md-call" />
-          &nbsp;&nbsp;&nbsp;
-          {this.props.phone || "Not Provided"}
-        </Text>
-        <Text>
-          <Ionicons color={COLORS.BLACK} name="md-globe" />
-          &nbsp;&nbsp;&nbsp;
-          {this.props.website || "Not Provided"}
-        </Text>
 
-      </View>
 
-    )
-  }
-}
-InfoBlock.propTypes = {
-  address: React.PropTypes.string,
-  phone: React.PropTypes.string,
-  website: React.PropTypes.string
-}
 
 export default class BuildingDetails extends Component {
 
@@ -94,8 +89,6 @@ export default class BuildingDetails extends Component {
       this.setState({
         comments: responseJSON.comments
       })
-
-
     })
   }
   componentWillMount() {
@@ -106,7 +99,6 @@ export default class BuildingDetails extends Component {
 
   renderComments() {
     return (
-
       <ScrollView>
         {this.state.comments.map((comment) => {
           return <Comment key={comment.id} comment={comment}></Comment>})
@@ -121,6 +113,12 @@ export default class BuildingDetails extends Component {
       return (<View style={[Styles.container]}></View>)
     }
     else {
+      // Grabbed from http://stackoverflow.com/questions/30606827/set-the-bounds-of-a-mapview
+      const earthRadiusInKM = 6371,
+            radiusInKM = 1,
+            aspectRatio = 1
+      const radiusInRad = radiusInKM / earthRadiusInKM;
+
       const buildingRegion = {
         latitude: building.coordinates.latitude,
         longitude: building.coordinates.longitude,
@@ -140,7 +138,6 @@ export default class BuildingDetails extends Component {
               style={Styles.buildingBanner}
             />
             <View style={[{justifyContent: 'space-around', alignItems: 'stretch'}]}>
-
               {/* Titleblock */}
               <Text
                 numberOfLines={1}
@@ -173,15 +170,21 @@ export default class BuildingDetails extends Component {
               }}>
                 {this.renderComments()}
               </View>
-              <MKButton
-                backgroundColor={COLORS.THEME}
-                style={[Styles.buildingDetailsFloatingButtonStyle]}
+              <Button
                 onPress={() => {
                   Actions.addReview({building: building})
                 }}
-              >
+                theme={1}
+                buttonText={"Review Building"}
+              />
+
+              {/* <MKButton
+                backgroundColor={COLORS.THEME}
+                style={[Styles.buildingDetailsFloatingButtonStyle]}
+
+                >
                 <Text style={{color: COLORS.WHITE}}>Review this building</Text>
-              </MKButton>
+              </MKButton> */}
             </View>
           </ScrollView>
           <FloatingButtons />

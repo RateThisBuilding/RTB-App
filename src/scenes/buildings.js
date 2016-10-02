@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ListView, Text } from 'react-native';
+import { View, ListView, Text, StyleSheet } from 'react-native';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import GiftedListView from 'react-native-gifted-listview'
@@ -80,7 +80,7 @@ class Buildings extends Component {
                      />
 
     return (
-      <View style={[Styles.container, {marginLeft: 0, marginRight: 0}]}>
+      <View style={[Styles.container]}>
         {listView}
       </View>
     );
@@ -91,6 +91,10 @@ Buildings.propTypes = {
   searchParams: React.PropTypes.object,
   searchActive: React.PropTypes.bool
 }
+
+const styles = StyleSheet.create({
+
+})
 
 function mapStateToProps(state) {
   return {
