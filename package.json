@@ -23,6 +23,7 @@
   "devDependencies": {
     "babel-eslint": "^6.1.2",
     "eslint": "^3.5.0",
-    "eslint-plugin-react": "^6.3.0"
+    "eslint-plugin-react": "^6.3.0",
+    "react-native-debug-stylesheet": "^0.1.1"
   }
 }

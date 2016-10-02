@@ -1,10 +1,11 @@
 import { StyleSheet, Dimensions } from 'react-native';
+// import  StyleSheet  from 'react-native-debug-stylesheet'
 
 export const FULLWIDTH = Dimensions.get('window').width;
 export const FULLHEIGHT = Dimensions.get('window').height;
 
-export const NAVBARHEIGHT = 64;
-export const TABMENUBARHEIGHT = 50;
+  export const NAVBARHEIGHT = 64;
+  export const TABMENUBARHEIGHT = 50;
 
 export const COLORS =  {
   THEME: '#FF6822',
@@ -36,11 +37,12 @@ export default StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent:'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 200
   },
   buildingComponent:{
     width: (FULLWIDTH*.5)-10,
-    maxHeight: FULLHEIGHT*.33,
+    height: FULLHEIGHT*.33,
     margin: 5,
     padding: 5,
 
@@ -57,7 +59,7 @@ export default StyleSheet.create({
   buildingComponentTouchable: {
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   buildingThumbnail: {
     width:FULLWIDTH*.37,

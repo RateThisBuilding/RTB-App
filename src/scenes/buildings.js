@@ -6,7 +6,7 @@ import GiftedListView from 'react-native-gifted-listview'
 import _ from 'underscore'
 
 import { applySearchParams, clearSearchParams } from '../actions/buildingSearch'
-import Styles, { FULLWIDTH } from '../styles'
+import Styles, { FULLWIDTH, FULLHEIGHT } from '../styles'
 import Building from '../components/building'
 import * as buildingSearchStrategies from '../helpers/searchStrategies'
 
@@ -57,6 +57,7 @@ class Buildings extends Component {
       pagination={true}
       refreshable={true}
       withSections={true}
+      // style={{ height: FULLHEIGHT-50-64}}
       contentContainerStyle={Styles.buildingsListStyle}
       rowView={(rowData)=> <Building building={rowData}/>}
       forceUpdate={this.state.forceUpdate} //This is
@@ -73,6 +74,7 @@ class Buildings extends Component {
       customStyles={{
         paginationView: {
           width: FULLWIDTH,
+
           flex: 2,
         },
       }}
