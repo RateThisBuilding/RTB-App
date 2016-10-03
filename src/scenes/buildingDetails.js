@@ -38,7 +38,9 @@ class FloatingButtons extends Component {
           buttonText={"Search Vacancy..."}
           style={{
             opacity: 0.8,
-            margin: 0
+            margin: 0,
+            flex: 1
+            
           }}
         />
         {/* <MKButton
@@ -58,7 +60,8 @@ class FloatingButtons extends Component {
           buttonText={"List Now"}
           style={{
             opacity: 0.8,
-            margin: 0
+            margin: 0,
+            flex: 1
           }}
         />
       </View>
