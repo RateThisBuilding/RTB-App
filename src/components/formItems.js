@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet } from 'react-native'
-import {  MKButton } from 'react-native-material-kit'
+import {  MKButton, MKTextField } from 'react-native-material-kit'
 
 import { COLORS }  from '../styles'
 
@@ -21,7 +21,7 @@ export class Button extends Component {
     onPress: React.PropTypes.func,
     theme: React.PropTypes.number, // Either the blue or Orange
     buttonText: React.PropTypes.string,
-    style: React.PropTypes.object
+    style: React.PropTypes.object,
   }
   static defaultProps = {
     style: {}
@@ -40,6 +40,34 @@ export class Button extends Component {
         </Text>
       </MKButton>
 
+    )
+  }
+}
+
+export class TextField extends Component {
+  static propTypes = {
+    multiline: React.PropTypes.bool,
+    onTextChange: React.PropTypes.func,
+    defaultText: React.PropTypes.string,
+    password: React.PropTypes.bool,
+    autoCapitalize: React.PropTypes.string
+
+  }
+  static defaultProps = {
+    multiline: false,
+    defaultText: "",
+  }
+
+  render() {
+    return (
+      <MKTextField
+        multiline={this.props.multiline}
+        style={this.props.multiline? styles.multiLineInputStyle : styles.textInputStyle}
+        onTextChange={this.props.onTextChange}
+        defaultValue={this.props.defaultText}
+        password={this.props.password}
+        autoCapitalize={this.props.autoCapitalize}
+      />
     )
   }
 }
@@ -65,5 +93,19 @@ const styles = StyleSheet.create({
     // width: FULLWIDTH*.48,
     opacity: 0.8
   },
-  buttonText: {color: 'white', fontWeight: 'bold', textAlign: 'center'}
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  textInputStyle: {
+    marginTop: 10,
+    height: 40,
+    padding: 5
+  },
+  multiLineInputStyle: {
+    marginTop: 10,
+    height: 100,
+    padding: 5
+  }
 })

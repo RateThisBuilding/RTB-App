@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, Image, Alert, StyleSheet } from 'react-native';
-import { MKTextField, MKButton } from 'react-native-material-kit'
+import { View, ScrollView, Image, Alert, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux'
 import ImagePicker from 'react-native-image-crop-picker'
 
-import { FormLabelText, Button } from '../components/formItems'
+import SceneContainer from '../components/sceneContainer'
+import { FormLabelText, Button, TextField } from '../components/formItems'
 import CategoryPicker from '../components/categoryPicker'
 import LocationPicker from '../components/locationPicker'
-import Styles, { COLORS } from '../styles'
+import Styles from '../styles'
 
 import LOCATION_DATA from '../../data/locations'
 
@@ -72,18 +72,23 @@ export default class AddBuilding extends Component {
     })
   }
 
+  updateFormVal(name,val){
+    this.setState({
+      [name]: val
+    })
+  }
+
   render() {
     let buildingImage;
     if (this.state.buildingImage){
       buildingImage = <Image source={{uri:this.state.buildingImage.path}} style={Styles.selectedImageDimensions}/>
     }
     return (
-      <View style={[Styles.container]}>
+      <SceneContainer>
         <ScrollView>
           <FormLabelText text="Building Name" />
-          <MKTextField
-            style={{marginTop: 10, height: 40}}
-            onTextChange={(e)=>{this.setState({name:e})}}
+          <TextField
+            onTextChange={this.updateFormVal.bind(this,'name')}
           />
           <FormLabelText text="Category" />
           <Button
@@ -102,19 +107,16 @@ export default class AddBuilding extends Component {
             buttonText={"Select Location"}
           />
           <FormLabelText text="Address" />
-          <MKTextField
-            style={{marginTop: 10, height: 40}}
-            onTextChange={(e)=>{this.setState({address:e})}}
+          <TextField
+            onTextChange={this.updateFormVal.bind(this,'address')}
           />
           <FormLabelText text="Postal Code" />
-          <MKTextField
-            style={{marginTop: 10, height: 40}}
-            onTextChange={(e)=>{this.setState({postalCode:e})}}
+          <TextField
+            onTextChange={this.updateFormVal.bind(this,'postalCode')}
           />
           <FormLabelText text="Year Built" />
-          <MKTextField
-            style={{marginTop: 10, height: 40}}
-            onTextChange={(e)=>{this.setState({yearBuilt:e})}}
+          <TextField
+            onTextChange={this.updateFormVal.bind(this,'yearBuilt')}
           />
           <FormLabelText text="Images" />
           <View style={Styles.selectedImagesBarPreview}>{buildingImage}</View>
@@ -133,8 +135,6 @@ export default class AddBuilding extends Component {
             theme={1}
             buttonText={"Submit"}
           />
-
-
         </ScrollView>
         <CategoryPicker
           categories={this._getAvailableCategories()}
@@ -150,7 +150,7 @@ export default class AddBuilding extends Component {
           currentlySelectedLocations={this.state.location}
           onClose={()=>{this.setState({showLocationListModal:false})}}
         />
-      </View>
+      </SceneContainer>
 
     );
   }

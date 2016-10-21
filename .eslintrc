@@ -11,7 +11,8 @@
   },
   "rules": {
     "react/jsx-indent": [2, 2],
-    "no-undef": 1
+    "no-undef": 1,
+    "no-constant-condition": "off"
   },
   "extends": ["eslint:recommended", "plugin:react/recommended"]
 }

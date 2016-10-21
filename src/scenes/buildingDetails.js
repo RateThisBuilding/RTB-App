@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text, Image, MapView, StyleSheet } from 'react-native';
-import { MKButton } from 'react-native-material-kit'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Actions } from 'react-native-router-flux'
 
+import SceneContainer from '../components/sceneContainer'
 import { Button } from '../components/formItems'
 import { Title } from '../components/typography'
 import Comment from '../components/comment'
@@ -40,7 +39,7 @@ class FloatingButtons extends Component {
             opacity: 0.8,
             margin: 0,
             flex: 1
-            
+
           }}
         />
         {/* <MKButton
@@ -113,7 +112,7 @@ export default class BuildingDetails extends Component {
   render() {
     const { building } = this.state;
     if(!building){
-      return (<View style={[Styles.container]}></View>)
+      return (<SceneContainer />)
     }
     else {
       // Grabbed from http://stackoverflow.com/questions/30606827/set-the-bounds-of-a-mapview
@@ -134,7 +133,7 @@ export default class BuildingDetails extends Component {
         animateDrop: true,
       }
       return (
-        <View style={[Styles.container]}>
+        <SceneContainer>
           <ScrollView>
             <Image
               source={{uri: building.banner.src}}
@@ -191,7 +190,7 @@ export default class BuildingDetails extends Component {
             </View>
           </ScrollView>
           <FloatingButtons />
-        </View>
+        </SceneContainer>
       )
     }
   }

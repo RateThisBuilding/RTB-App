@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { ScrollView, View, Text, Image, Alert, StyleSheet } from 'react-native'
-import { MKTextField, MKButton } from 'react-native-material-kit'
+import { MKTextField } from 'react-native-material-kit'
 import StarRating from 'react-native-star-rating'
 import { Actions } from 'react-native-router-flux'
 import ImagePicker from 'react-native-image-crop-picker'
 
-import { FormLabelText, Button } from '../components/formItems'
+import SceneContainer from '../components/sceneContainer'
+import { FormLabelText, Button, TextField } from '../components/formItems'
 import Styles, { COLORS } from '../styles'
 
 
@@ -31,6 +32,12 @@ export default class AddReview extends Component {
     })
   }
 
+  updateFormVal(key, val){
+    this.setState({
+      [key] : val
+    })
+  }
+
   render() {
     let Images;
     if (this.state.images.length > 0){
@@ -40,9 +47,8 @@ export default class AddReview extends Component {
     }
     return (
       // TODO: Reorganize the elements here into smaller ones
-      <View style={[Styles.container]}>
+      <SceneContainer>
         <ScrollView>
-
           {/* Title */}
           <Text style={Styles.formTitle}> Review: {this.props.building.title} </Text>
           {/* Rating */}
@@ -63,24 +69,20 @@ export default class AddReview extends Component {
           </View>
           {/* Subject */}
           <FormLabelText text="Subject" />
-          <MKTextField
-            style={{marginTop: 10, height: 40}}
-            onTextChange={(e)=>{this.setState({subject:e})}}
+          <TextField
+            onTextChange={this.updateFormVal.bind(this,'subject')}
           />
           {/* Comments */}
           <FormLabelText text="Comments" />
-          <MKTextField
-            multiline={true}
-            style={{marginTop: 10, height: 100}}
-            onTextChange={(e)=>{this.setState({comments:e});}}
+          <TextField
+            multiline
+            onTextChange={this.updateFormVal.bind(this,'comments')}
           />
           {/* Images */}
           <FormLabelText text="Images" />
           <View style={Styles.selectedImagesBarPreview}>{Images}</View>
           <Button
-            onPress={() => {
-              this.openImagePicker();
-            }}
+            onPress={() => { this.openImagePicker(); }}
             theme={2}
             buttonText={"Add Images"}
           />
@@ -95,8 +97,7 @@ export default class AddReview extends Component {
             buttonText={"Submit"}
           />
         </ScrollView>
-
-      </View>
+      </SceneContainer>
     );
   }
 }

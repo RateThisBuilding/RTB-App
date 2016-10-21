@@ -7,11 +7,12 @@ import { Actions } from 'react-native-router-flux'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import { applySearchParams } from '../actions/buildingSearch'
+import SceneContainer from '../components/sceneContainer'
 import { Title } from '../components/typography'
-import { FormLabelText, Button } from '../components/formItems'
+import { FormLabelText, Button, TextField } from '../components/formItems'
 import CategoryPicker from '../components/categoryPicker'
 import LocationPicker from '../components/locationPicker'
+import { applySearchParams } from '../actions/buildingSearch'
 import Styles, { COLORS } from '../styles'
 
 // TODO: Grab these programmatically using API
@@ -87,11 +88,17 @@ class BuildingSearch extends Component {
     }
   }
 
+  updateFormVal(key, val){
+    this.setState({
+      [key] : val
+    })
+  }
+
 
   render() {
 
     return (
-      <View style={[Styles.container]}>
+      <SceneContainer>
         <ScrollView>
           <Title text="Search for Building" />
           {/* TODO: Make the following 2 into a form group? */}
@@ -103,16 +110,10 @@ class BuildingSearch extends Component {
             theme={2}
             buttonText={"Select Category"}
           />
-
-
-
           <FormLabelText text="Address" />
-          <MKTextField
-            tintColor={MKColor.Lime}
-            textInputStyle={{color: MKColor.Orange}}
-            placeholder=""
-            defaultValue={this.props.searchParams.address}
-            onTextChange={(e)=>{this.setState({address:e});}}
+          <TextField
+            defaultText={this.props.searchParams.address}
+            onTextChange={this.updateFormVal.bind(this, 'address')}
           />
           <FormLabelText text="Location" />
           <Button
@@ -146,7 +147,7 @@ class BuildingSearch extends Component {
           currentlySelectedLocations={this.state.location}
           onClose={()=>{this.setState({showLocationListModal:false})}}
         />
-      </View>
+      </SceneContainer>
     )
   }
 }

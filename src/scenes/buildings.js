@@ -5,9 +5,10 @@ import { connect } from 'react-redux'
 import GiftedListView from 'react-native-gifted-listview'
 import _ from 'underscore'
 
+import SceneContainer from '../components/sceneContainer'
+import Building from '../components/building'
 import { applySearchParams, clearSearchParams } from '../actions/buildingSearch'
 import Styles, { FULLWIDTH, FULLHEIGHT } from '../styles'
-import Building from '../components/building'
 import * as buildingSearchStrategies from '../helpers/searchStrategies'
 
 
@@ -82,9 +83,9 @@ class Buildings extends Component {
                      />
 
     return (
-      <View style={[Styles.container]}>
+      <SceneContainer>
         {listView}
-      </View>
+      </SceneContainer>
     );
   }
 }

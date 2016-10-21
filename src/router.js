@@ -14,6 +14,7 @@ import Profile from './scenes/profile'
 import AddReview from './scenes/addReview'
 import BuildingDetails from './scenes/buildingDetails'
 import BuildingSearch from './scenes/buildingSearch'
+import Auth from './scenes/auth'
 import { Tab_HomeIcon, Tab_Search, /* Tab_MessageIcon,*/ Tab_NewListingIcon, Tab_ProfileIcon } from './components/tabicon';
 // import all relevent Actions
 import { clearSearchParams } from './actions/buildingSearch'
@@ -48,7 +49,12 @@ class AppRouter extends Component {
       <Scene key="modal" component={Modal}>
         <Scene key="root" >
           <Scene key="tabbar" tabs={true} style={Styles.tabMenuBarStyles}>
-            <Scene key="buildingsTab" selectedIconStyle={Styles.tabIconSelected} initial={true}  icon={Tab_HomeIcon}>
+            <Scene
+              key="buildingsTab"
+              selectedIconStyle={Styles.tabIconSelected}
+              initial={true}
+              icon={Tab_HomeIcon}
+            >
               <Scene
                 key="buildings"
                 component={Buildings}
@@ -93,12 +99,24 @@ class AppRouter extends Component {
               title="Add Building"
               icon={Tab_NewListingIcon}/>
             <Scene
-              key="profile"
+              key="profileTab"
               selectedIconStyle={Styles.tabIconSelected}
               hideNavBar={false}
-              component={Profile}
-              title="Profile"
-              icon={Tab_ProfileIcon}/>
+              icon={Tab_ProfileIcon}>
+              <Scene
+                key="profile"
+                component={Profile}
+                title="Profile"
+                type="refresh"
+              />
+              <Scene
+                key="auth"
+                component={Auth}
+                schema="modal"
+                direction="vertical"
+                hideTabBar={true}
+              />
+            </Scene>
           </Scene>
         </Scene>
       </Scene>
