@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { View, Text, AsyncStorage } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { Actions } from 'react-native-router-flux'
+
 
 import SceneContainer from '../components/sceneContainer'
 import { FormLabelText, TextField, Button } from '../components/formItems'
@@ -27,11 +29,17 @@ class Auth extends Component{
       [key]: val
     })
   }
+  componentWillReceiveProps(props){
+    if(props.user){
+      Actions.pop()
+    }
+  }
+
   render() {
     const { username, password } = this.state
     AsyncStorage.getItem('@RateThisBuilding:session', (err, result)=>{
-      console.log(err);
-      console.log(result);
+      // console.log(err);
+      // console.log(result);
     })
     return (
       <SceneContainer>
@@ -62,6 +70,7 @@ class Auth extends Component{
 
 function mapStateToProps(state) {
   return {
+    user: state.users.user
   }
 }
 

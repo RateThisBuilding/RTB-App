@@ -30,6 +30,7 @@ function* logoutFlow(){
     yield take(actionTypes.USER_LOGOUT)
     const token = yield call(acquireTokenCall)
     const response = yield call(API.users.logout, token)
+    AsyncStorage.removeItem('@RateThisBuilding:session')
     yield put({type: actionTypes.USER_LOGOUT_SUCCESS})
 
   }

@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import {  bindActionCreators,  } from 'redux'
 import { connect } from 'react-redux'
 import { Scene, Router, Modal, Actions } from 'react-native-router-flux';
-import { Text } from 'react-native'
 
 // import scenes
 import Styles from './styles'
@@ -18,32 +17,42 @@ import Auth from './scenes/auth'
 import { Tab_HomeIcon, Tab_Search, /* Tab_MessageIcon,*/ Tab_NewListingIcon, Tab_ProfileIcon } from './components/tabicon';
 // import all relevent Actions
 import { clearSearchParams } from './actions/buildingSearch'
+import { logout } from './actions/users'
 
 // TODO: Find a solution that doesn't require importing the reducer directly
-import { initialState as defaultBuildingParams } from './reducers/buildingSearch'
-import _ from 'underscore'
-
-
-
-
-
-
 
 class AppRouter extends Component {
+
+  static propTypes = {
+    searchActive: React.PropTypes.bool,
+    clearSearchParams: React.PropTypes.func,
+    logout: React.PropTypes.func,
+    user: React.PropTypes.object
+  }
 
   _updateTitleAfterSearchActive(){
     return this.props.searchActive? 'Clear' : ' '
   }
-  componentWillReceiveProps(nextProps){
-      this.setState({
-        clearLabelVisible: nextProps.searchActive
-      })
+  _shouldShowLogoutButton(){
+    return this.props.user? 'Log out': ' '
 
+  }
+  componentWillReceiveProps(nextProps){
+      // this.setState({
+      //   clearLabelVisible: nextProps.searchActive,
+      //   isLoggedIn: nextProps.user? true : false
+      // })
+      // Actions.refresh()
+      if(nextProps.user != this.props.user){
+        Actions.refresh()
+      }
   }
   constructor(props){
     super(props)
     this.state = {
-      clearLabelVisible: false
+      clearLabelVisible: false,
+      isLoggedIn: false
+
     }
     this.scenes = Actions.create(
       <Scene key="modal" component={Modal}>
@@ -102,12 +111,21 @@ class AppRouter extends Component {
               key="profileTab"
               selectedIconStyle={Styles.tabIconSelected}
               hideNavBar={false}
-              icon={Tab_ProfileIcon}>
+              icon={Tab_ProfileIcon}
+            >
               <Scene
                 key="profile"
                 component={Profile}
                 title="Profile"
                 type="refresh"
+                onRight={() => {
+                  // if(this.props.user){
+                  this.props.logout(); Actions.refresh()
+                  // }else{
+                  // Actions.refresh()
+                  // }
+                }}
+                getRightTitle={this._shouldShowLogoutButton.bind(this)}
               />
               <Scene
                 key="auth"
@@ -126,7 +144,7 @@ class AppRouter extends Component {
 
   render() {
     return (
-      <Router scenes={this.scenes} />
+      <Router {...this.props} scenes={this.scenes} />
     )
   }
 }
@@ -134,12 +152,13 @@ class AppRouter extends Component {
 function mapStateToProps(state){
   return {
     searchActive: state.buildingSearch.searchActive,
-    searchParams: state.buildingSearch.searchParams
+    searchParams: state.buildingSearch.searchParams,
+    user: state.users.user
   }
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ clearSearchParams }, dispatch)
+  return bindActionCreators({ clearSearchParams, logout }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppRouter)
