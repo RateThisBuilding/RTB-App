@@ -14,7 +14,7 @@ import AddReview from './scenes/addReview'
 import BuildingDetails from './scenes/buildingDetails'
 import BuildingSearch from './scenes/buildingSearch'
 import Auth from './scenes/auth'
-import { Tab_HomeIcon, Tab_Search, /* Tab_MessageIcon,*/ Tab_NewListingIcon, Tab_ProfileIcon } from './components/tabicon';
+import { Tab_HomeIcon, Tab_Search,Tab_NewListingIcon, Tab_ProfileIcon } from './components/tabicon';
 // import all relevent Actions
 import { clearSearchParams } from './actions/buildingSearch'
 import { logout } from './actions/users'
@@ -127,15 +127,16 @@ class AppRouter extends Component {
                 }}
                 getRightTitle={this._shouldShowLogoutButton.bind(this)}
               />
-              <Scene
-                key="auth"
-                component={Auth}
-                schema="modal"
-                direction="vertical"
-                hideTabBar={true}
-              />
+
             </Scene>
           </Scene>
+          <Scene
+            key="auth"
+            component={Auth}
+            schema="modal"
+            direction="vertical"
+            hideTabBar={true}
+          />
         </Scene>
       </Scene>
     );

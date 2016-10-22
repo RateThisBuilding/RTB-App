@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import { View, ScrollView, Text, Image, MapView, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux'
 
@@ -20,41 +22,18 @@ class FloatingButtons extends Component {
         left: 0,
         top: 0
       }}>
-        {/* <MKButton
-          backgroundColor={COLORS.THEME}
-          style={Styles.buildingDetailsFloatingButtonStyle}
-          onPress={() => {
-          console.log('Search Vacancy');
-          }}
-          >
-          <Text style={{color: COLORS.WHITE}}>Search Vacancy...</Text>
-        </MKButton> */}
         <Button
-          onPress={() => {
-            console.log('Search Vacancy');
-          }}
+          onPress={() => { console.log('Search Vacancy'); }}
           theme={1}
           buttonText={"Search Vacancy..."}
           style={{
             opacity: 0.8,
             margin: 0,
             flex: 1
-
           }}
         />
-        {/* <MKButton
-          backgroundColor={COLORS.SECONDARY}
-          style={Styles.buildingDetailsFloatingButtonStyle}
-          onPress={() => {
-          console.log('List Now');
-          }}
-          >
-          <Text style={{color: COLORS.WHITE}}>List Now</Text>
-        </MKButton> */}
         <Button
-          onPress={() => {
-            console.log('List Now');
-          }}
+          onPress={() => { console.log('List Now'); }}
           theme={2}
           buttonText={"List Now"}
           style={{
@@ -70,7 +49,11 @@ class FloatingButtons extends Component {
 
 
 
-export default class BuildingDetails extends Component {
+class BuildingDetails extends Component {
+
+  static propTypes = {
+    building: React.PropTypes.object
+  }
 
   deg2rad (angle) { return angle * 0.017453292519943295 // (angle / 180) * Math.PI;
   }
@@ -174,7 +157,11 @@ export default class BuildingDetails extends Component {
               </View>
               <Button
                 onPress={() => {
-                  Actions.addReview({building: building})
+                  if(this.props.user){
+                    Actions.addReview({building: building})
+                  }else{
+                    Actions.auth()
+                  }
                 }}
                 theme={1}
                 buttonText={"Review Building"}
@@ -195,6 +182,17 @@ export default class BuildingDetails extends Component {
     }
   }
 }
-BuildingDetails.propTypes = {
-  building: React.PropTypes.object
+
+function mapStateToProps(state){
+  return {
+    user: state.users.user
+  }
+
 }
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({
+
+  })
+}
+
+export default connect(mapStateToProps)(BuildingDetails)
