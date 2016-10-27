@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, ListView, Text, StyleSheet } from 'react-native';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { Actions } from 'react-native-router-flux'
 import GiftedListView from 'react-native-gifted-listview'
 import _ from 'underscore'
 
@@ -25,6 +26,10 @@ class Buildings extends Component {
     };
   }
 
+  componentDidMount(){
+    // Need to preload modalbox in this scene since it will be first to load
+    Actions.modalbox();
+  }
 
   componentWillReceiveProps(nextProps){
     const shouldUpdate = !_.isEqual(nextProps.searchParams, this.props.searchParams)

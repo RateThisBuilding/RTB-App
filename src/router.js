@@ -1,5 +1,6 @@
 // import external dependencies
 import React, { Component } from 'react';
+import { View } from 'react-native'
 import {  bindActionCreators,  } from 'redux'
 import { connect } from 'react-redux'
 import { Scene, Router, Modal, Actions } from 'react-native-router-flux';
@@ -14,10 +15,13 @@ import AddReview from './scenes/addReview'
 import BuildingDetails from './scenes/buildingDetails'
 import BuildingSearch from './scenes/buildingSearch'
 import Auth from './scenes/auth'
+import GlobalModalBox from './scenes/globalModalBox'
+
 import { Tab_HomeIcon, Tab_Search,Tab_NewListingIcon, Tab_ProfileIcon } from './components/tabicon';
 // import all relevent Actions
 import { clearSearchParams } from './actions/buildingSearch'
 import { logout } from './actions/users'
+import { openGlobalModal } from './actions/ui'
 
 // TODO: Find a solution that doesn't require importing the reducer directly
 
@@ -41,13 +45,11 @@ class AppRouter extends Component {
     super(props)
     this.state = {
       clearLabelVisible: false,
-      isLoggedIn: false
-
     }
     this.scenes = Actions.create(
       <Scene key="modal" component={Modal}>
         <Scene key="root" >
-          <Scene key="tabbar" tabs={true} style={Styles.tabMenuBarStyles}>
+          <Scene key="tabbar" tabs={true} style={Styles.tabMenuBarStyles} >
             <Scene
               key="buildingsTab"
               selectedIconStyle={Styles.tabIconSelected}
@@ -120,6 +122,11 @@ class AppRouter extends Component {
             hideTabBar={true}
           />
         </Scene>
+        <Scene
+          key="modalbox"
+          component={GlobalModalBox}
+          hideNavBar
+        />
       </Scene>
     );
   }
@@ -141,7 +148,11 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ clearSearchParams, logout }, dispatch)
+  return bindActionCreators({
+     clearSearchParams,
+     logout,
+     openGlobalModal
+   }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppRouter)

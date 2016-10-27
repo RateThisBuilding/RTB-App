@@ -12,10 +12,16 @@ function* loginFlow(){
   while (true){
     try{
       const { username, password } = (yield take(actionTypes.USER_LOGIN)).data
+
+      // Open waiting dialog
+      yield put({type: actionTypes.OPEN_GLOBAL_MODAL})
+
       const token = yield call(acquireTokenCall)
       const response = yield call(API.users.login,username, password, token)
       AsyncStorage.setItem('@RateThisBuilding:session', JSON.stringify(response))
+
       yield put({type: actionTypes.USER_LOGIN_SUCCESS, data: response})
+      yield put({type: actionTypes.CLOSE_GLOBAL_MODAL})
 
     }catch(error){
       console.error(error)
@@ -28,10 +34,14 @@ function* loginFlow(){
 function* logoutFlow(){
   while (true) {
     yield take(actionTypes.USER_LOGOUT)
+    yield put({type: actionTypes.OPEN_GLOBAL_MODAL})
+
     const token = yield call(acquireTokenCall)
     const response = yield call(API.users.logout, token)
     AsyncStorage.removeItem('@RateThisBuilding:session')
     yield put({type: actionTypes.USER_LOGOUT_SUCCESS})
+    yield put({type: actionTypes.CLOSE_GLOBAL_MODAL})
+    
 
   }
 }
