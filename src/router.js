@@ -34,18 +34,8 @@ class AppRouter extends Component {
     return this.props.searchActive? 'Clear' : ' '
   }
   _shouldShowLogoutButton(){
-    return this.props.user? 'Log out': ' '
+    return this.props.user? 'Log out': 'aaa'
 
-  }
-  componentWillReceiveProps(nextProps){
-      // this.setState({
-      //   clearLabelVisible: nextProps.searchActive,
-      //   isLoggedIn: nextProps.user? true : false
-      // })
-      // Actions.refresh()
-      if(nextProps.user != this.props.user){
-        Actions.refresh()
-      }
   }
   constructor(props){
     super(props)
@@ -118,14 +108,6 @@ class AppRouter extends Component {
                 component={Profile}
                 title="Profile"
                 type="refresh"
-                onRight={() => {
-                  // if(this.props.user){
-                  this.props.logout(); Actions.refresh()
-                  // }else{
-                  // Actions.refresh()
-                  // }
-                }}
-                getRightTitle={this._shouldShowLogoutButton.bind(this)}
               />
 
             </Scene>

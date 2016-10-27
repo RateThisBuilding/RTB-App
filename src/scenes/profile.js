@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { View, ScrollView, Image, StyleSheet, Text } from 'react-native'
-import { MKTextField, MKColor, MKButton } from 'react-native-material-kit'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Actions } from 'react-native-router-flux'
@@ -10,16 +9,21 @@ import SceneContainer from '../components/sceneContainer'
 import ColumnedRow from '../components/columnedRow'
 import { Title } from '../components/typography'
 import { Button } from '../components/formItems'
+import { logout } from '../actions/users'
 import Styles from '../styles'
 
 class Profile extends Component {
   static propTypes = {
-    user: React.PropTypes.object
+    user: React.PropTypes.object,
+    logout: React.PropTypes.func
   }
 
   constructor(props){
     super(props);
     this.state = {page: 'My Profile'};
+  }
+  componentWillReceiveProps(newProps){
+
   }
   render() {
     if (this.props.user){
@@ -65,7 +69,10 @@ class Profile extends Component {
               leftText={"Add a unit for rent"}
               rightText={">"}
             />
-
+            <Button
+              onPress={()=>{this.props.logout()}}
+              buttonText={'Log Out'}
+            />
 
           </ScrollView>
         </SceneContainer>
@@ -93,7 +100,7 @@ function mapStateToProps(state){
   }
 }
 function mapDispatchToProps(dispatch){
-  return bindActionCreators({}, dispatch)
+  return bindActionCreators({ logout }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)
