@@ -42,10 +42,6 @@ class Buildings extends Component {
   _onFetch(page = 0, callback, ){
     if(this.props.searchActive){
       const { category, address, location} = this.props.searchParams
-      console.log('Searching...');
-      console.log('Category: ', category);
-      console.log('Address: ', address);
-      console.log('Location: ', location);
       // const addressSearchString = address===""? "*" : `${coords.lat},${coords.long}`
       if(address === ""){
         buildingSearchStrategies.searchWithoutAddress(category, location, page, callback)
@@ -58,11 +54,12 @@ class Buildings extends Component {
   }
   render() {
     const listView = <GiftedListView
-      pageSize={6}
+      // pageSize={6}
       onFetch={this._onFetch.bind(this)}
       pagination={true}
       refreshable={true}
       withSections={true}
+      autoPaginate={true}
       // style={{ height: FULLHEIGHT-50-64}}
       contentContainerStyle={Styles.buildingsListStyle}
       rowView={(rowData)=> <Building building={rowData}/>}
@@ -76,12 +73,14 @@ class Buildings extends Component {
           </View>
         );
       }}
+      paginationWaitingView={()=>{
+        return (<View></View>)
+      }}
       refreshableTintColor="blue"
       customStyles={{
         paginationView: {
           width: FULLWIDTH,
 
-          flex: 2,
         },
       }}
       ref={'BUILDINGLIST'}
