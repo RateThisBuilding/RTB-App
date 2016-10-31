@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import { ScrollView, View, Text, Image, Alert, StyleSheet } from 'react-native'
 import { MKTextField } from 'react-native-material-kit'
 import StarRating from 'react-native-star-rating'
@@ -7,10 +9,18 @@ import ImagePicker from 'react-native-image-crop-picker'
 
 import SceneContainer from '../components/sceneContainer'
 import { FormLabelText, Button, TextField } from '../components/formItems'
+import { addReview } from '../actions/reviews'
 import Styles, { COLORS } from '../styles'
 
 
-export default class AddReview extends Component {
+class AddReview extends Component {
+
+  static propTypes = {
+      building: React.PropTypes.object,
+      addReview: React.PropTypes.func,
+
+  }
+
   constructor(props){
     super(props)
     this.state = {
@@ -90,8 +100,15 @@ export default class AddReview extends Component {
           {/* Submit Button */}
           <Button
             onPress={() => {
-              Alert.alert('Review added', 'Your review has been successfully added.')
-              Actions.pop()
+              const { subject, comments, rating, images } = this.state
+              this.props.addReview({
+                subject,
+                comments,
+                rating,
+                images
+              })
+              // Alert.alert('Review added', 'Your review has been successfully added.')
+              // Actions.pop()
             }}
             theme={1}
             buttonText={"Submit"}
@@ -106,6 +123,16 @@ const styles = StyleSheet.create({
   starPickerContainer: {margin: 10}
 })
 
-AddReview.propTypes = {
-  building: React.PropTypes.object
+function mapStateToProps(state){
+  return {
+
+  }
 }
+
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({
+    addReview
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddReview)

@@ -1,14 +1,6 @@
-const API_ROOT = 'http://ratethisbuilding.com/api/buildings_1/user'
+import { POSTOpts } from './'
 
-const POSTOpts = function(CSRFtoken = null){
-  return {
-    method: 'POST',
-    headers: {
-      'Content-Type' : 'application/json',
-      'X-CSRF-TOKEN' : CSRFtoken,
-    }
-  }
-}
+const API_ROOT = 'http://ratethisbuilding.com/api/buildings_1/user'
 
 const acquireInitialToken = function () {
   return fetch(`${API_ROOT}/token.json`, POSTOpts()).then(response => response.json())
