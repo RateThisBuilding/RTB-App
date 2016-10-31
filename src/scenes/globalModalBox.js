@@ -50,6 +50,7 @@ class GlobalModalBox extends Component{
         ref={'globalModalBox'}
         swipeToClose={false}
         onClosed={this._onClosed.bind(this)}
+        backdropPressToClose={false}
       >
         <Text>Loading...</Text>
         <ActivityIndicator
