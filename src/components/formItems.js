@@ -67,6 +67,7 @@ export class TextField extends Component {
         defaultValue={this.props.defaultText}
         password={this.props.password}
         autoCapitalize={this.props.autoCapitalize}
+        {...this.props}
       />
     )
   }

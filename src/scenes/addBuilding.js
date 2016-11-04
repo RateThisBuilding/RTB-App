@@ -65,10 +65,9 @@ export default class AddBuilding extends Component {
     ImagePicker.openPicker({
       multiple: false
     }).then(image => {
-      console.log(image);
       this.setState({ buildingImage: image.path })
     }).catch(e => {
-      console.log(e);
+      console.error(e);
     })
   }
 

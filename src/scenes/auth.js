@@ -37,14 +37,10 @@ class Auth extends Component{
 
   render() {
     const { username, password } = this.state
-    AsyncStorage.getItem('@RateThisBuilding:session', (err, result)=>{
-      // console.log(err);
-      // console.log(result);
-    })
     return (
       <SceneContainer>
         <FormLabelText text={"Username"} />
-        <TextField onTextChange={this.updateFormVal.bind(this,'username')} autoCapitalize={'none'}/>
+        <TextField autoCorrect={false} onTextChange={this.updateFormVal.bind(this,'username')} autoCapitalize={'none'}/>
 
         <FormLabelText text={"Password"} />
         <TextField onTextChange={this.updateFormVal.bind(this,'password')} password autoCapitalize={'none'} />
@@ -55,12 +51,13 @@ class Auth extends Component{
           buttonText={'Login'}
 
         />
-        <Button
+        {/* Debug: Logout */}
+        {/* <Button
           onPress={()=>{this.props.logout()}}
           theme={2}
           buttonText={'Logout'}
 
-        />
+        /> */}
 
       </SceneContainer>
     )

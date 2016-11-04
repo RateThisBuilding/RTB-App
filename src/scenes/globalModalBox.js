@@ -19,7 +19,6 @@ class GlobalModalBox extends Component{
   }
 
   componentDidMount(){
-    console.log("Global Modal Box Mounted");
     if(this.props.globalModal){
       this.refs.globalModalBox.open()
     }
@@ -29,7 +28,6 @@ class GlobalModalBox extends Component{
   }
 
   componentWillReceiveProps(nProps){
-    console.log("Global Modal Received", nProps);
     if(nProps.globalModal){
       this.refs.globalModalBox.open()
     }else{

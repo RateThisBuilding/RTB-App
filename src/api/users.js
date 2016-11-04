@@ -14,7 +14,6 @@ const login = function(username, password, CSRFtoken){
     })
   })
   .then(response => {
-    console.log(response);
     if (!response.ok) {
       return response.json().then(respBody => {
         throw Error(respBody)

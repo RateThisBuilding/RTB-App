@@ -25,7 +25,7 @@ export function search(category, address, location, page, callback){
       }
     })
   })
-  .catch((err)=>{console.log(err);});
+  .catch((err)=>{console.error(err);});
 }
 
 export function standard(page,callback){
@@ -38,5 +38,5 @@ export function standard(page,callback){
       callback(_.groupBy(responseJSON.data, building => building.location))
     }
   })
-  .catch((err)=>{console.log(err);});
+  .catch((err)=>{console.error(err);});
 }

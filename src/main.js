@@ -16,8 +16,6 @@ const store = configureStore()
 
 
 AsyncStorage.getItem('@RateThisBuilding:session', (err, result)=>{
-  // console.log(err);
-  console.log(result);
   if(result){
     store.dispatch({
       type: actionTypes.USER_LOGIN_SUCCESS,

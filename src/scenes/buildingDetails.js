@@ -9,6 +9,7 @@ import { Button } from '../components/formItems'
 import { Title } from '../components/typography'
 import Comment from '../components/comment'
 import InfoBlock from '../components/buildingDetails/infoBlock'
+import { targetBuilding } from '../actions/buildings'
 import Styles, { COLORS, FULLHEIGHT } from '../styles'
 
 // TODO: Consider factoring the floating buttons out of this file
@@ -52,7 +53,8 @@ class FloatingButtons extends Component {
 class BuildingDetails extends Component {
 
   static propTypes = {
-    building: React.PropTypes.object
+    building: React.PropTypes.object,
+    targetBuilding: React.PropTypes.func
   }
 
   deg2rad (angle) { return angle * 0.017453292519943295 // (angle / 180) * Math.PI;
@@ -75,11 +77,25 @@ class BuildingDetails extends Component {
         comments: responseJSON.comments
       })
     })
+    // this.props.targetBuilding(this.state.building)
   }
   componentWillMount() {
     this.setState({
       building: this.props.building
     })
+  }
+
+  componentWillReceiveProps(nextProps){
+    if (nextProps.review){
+      // If there was a new review, do a refetch of the reviews
+      fetch(`http://ratethisbuilding.com/api/comments?nid=${this.state.building.id}`)
+      .then((response)=> response.json())
+      .then((responseJSON)=> {
+        this.setState({
+          comments: responseJSON.comments
+        })
+      })
+    }
   }
 
   renderComments() {
@@ -176,7 +192,7 @@ class BuildingDetails extends Component {
               </MKButton> */}
             </View>
           </ScrollView>
-          <FloatingButtons />
+          {/* <FloatingButtons /> */}
         </SceneContainer>
       )
     }
@@ -185,14 +201,15 @@ class BuildingDetails extends Component {
 
 function mapStateToProps(state){
   return {
-    user: state.users.user
+    user: state.users.user,
+    review: state.reviews.review
   }
 
 }
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
-
-  })
+    targetBuilding
+  }, dispatch)
 }
 
-export default connect(mapStateToProps)(BuildingDetails)
+export default connect(mapStateToProps, mapDispatchToProps)(BuildingDetails)

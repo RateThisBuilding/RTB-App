@@ -18,6 +18,7 @@ class AddReview extends Component {
   static propTypes = {
       building: React.PropTypes.object,
       addReview: React.PropTypes.func,
+      addReviewSuccess: React.PropTypes.bool
 
   }
 
@@ -38,7 +39,7 @@ class AddReview extends Component {
       images = images.map((image)=>({uri: image.path}))
       this.setState({ images })
     }).catch(e => {
-      console.log(e);
+      console.error(e);
     })
   }
 
@@ -46,6 +47,12 @@ class AddReview extends Component {
     this.setState({
       [key] : val
     })
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.review){
+      Actions.pop()
+    }
   }
 
   render() {
@@ -102,10 +109,11 @@ class AddReview extends Component {
             onPress={() => {
               const { subject, comments, rating, images } = this.state
               this.props.addReview({
+                buildingId: this.props.building.id,
                 subject,
                 comments,
-                rating,
-                images
+                rating: rating == 0? '-' : rating * 20,
+                images,
               })
               // Alert.alert('Review added', 'Your review has been successfully added.')
               // Actions.pop()
@@ -125,7 +133,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state){
   return {
-
+    review: state.reviews.review
   }
 }
 

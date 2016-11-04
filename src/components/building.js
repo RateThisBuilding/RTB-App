@@ -14,7 +14,6 @@ export default class Building extends Component{
      };
   }
   componentDidMount() {
-    console.log('mounted');
      Animated.timing(          // Uses easing functions
        this.state.fadeAnim,    // The value to drive
        {toValue: 1}            // Configuration
@@ -29,7 +28,7 @@ export default class Building extends Component{
         longitude : building.coordinates[0]
       }
     }catch(err){
-      console.log(`Building ID ${building.id} could not collect cooridnates`);
+      console.error(`Building ID ${building.id} could not collect cooridnates`);
     }
     this.setState({
       building: this.props.building

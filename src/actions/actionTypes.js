@@ -19,3 +19,5 @@ export const CLOSE_GLOBAL_MODAL = 'CLOSE_GLOBAL_MODAL'
 // Review Actions
 export const ADD_REVIEW = 'ADD_REVIEW'
 export const ADD_REVIEW_SUCCESS = 'ADD_REVIEW_SUCCESS'
+
+export const TARGET_BUILDING = 'TARGET_BUILDING'
