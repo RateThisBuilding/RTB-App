@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Modal from 'react-native-modalbox'
 
+import { Title } from '../components/typography'
 import { FULLWIDTH, FULLHEIGHT, NAVBARHEIGHT, TABMENUBARHEIGHT } from '../styles'
 import { closeGlobalModal } from '../actions/ui'
 
@@ -46,7 +47,10 @@ class GlobalModalBox extends Component{
     if(this.props.error){
       // console.log(this.props.error);
       content = (
-        <Text>{this.props.error}</Text>
+        <View>
+          <Title text="Error"/>
+          <Text>{this.props.error}</Text>
+        </View>
       )
     }else{
       content = (
@@ -62,7 +66,10 @@ class GlobalModalBox extends Component{
     }
     return(
       <Modal
-        style={styles.modalContainer}
+        style={[
+          styles.containerBase,
+          this.props.error? styles.errorContainer: styles.loadingContainer
+        ]}
         position={'center'}
         ref={'globalModalBox'}
         swipeToClose={false}
@@ -77,13 +84,21 @@ class GlobalModalBox extends Component{
 }
 
 const styles = StyleSheet.create({
-  modalContainer: {
+  loadingContainer: {
     width: FULLWIDTH*0.4,
     height: (FULLHEIGHT*0.4)-NAVBARHEIGHT-TABMENUBARHEIGHT,
+
+  },
+  errorContainer: {
+    width: FULLWIDTH* 0.6,
+    height: (FULLHEIGHT* 0.4)-NAVBARHEIGHT-TABMENUBARHEIGHT,
+  },
+  containerBase: {
     padding: 20,
     justifyContent: 'center',
     alignItems: 'center'
   }
+
 })
 
 const mapStateToProps = (state) => {
