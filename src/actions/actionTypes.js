@@ -13,8 +13,8 @@ export const USER_ERROR = 'USER_ERROR'
 
 // UI Actions
 export const OPEN_GLOBAL_MODAL = 'OPEN_GLOBAL_MODAL'
-export const OPEN_GLOBAL_MODAL_SUCCESS = 'OPEN_GLOBAL_MODAL_SUCCESS'
 export const CLOSE_GLOBAL_MODAL = 'CLOSE_GLOBAL_MODAL'
+export const OPEN_ERROR_MODAL = 'OPEN_ERROR_MODAL'
 
 // Review Actions
 export const ADD_REVIEW = 'ADD_REVIEW'

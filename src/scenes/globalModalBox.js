@@ -11,7 +11,9 @@ import { closeGlobalModal } from '../actions/ui'
 class GlobalModalBox extends Component{
 
   static propTypes = {
-    globalModal: React.PropTypes.bool
+    globalModal: React.PropTypes.bool,
+    error: React.PropTypes.string,
+    closeGlobalModal: React.PropTypes.func
   }
 
   constructor(props){
@@ -40,7 +42,24 @@ class GlobalModalBox extends Component{
   }
 
   render(){
-
+    let content
+    if(this.props.error){
+      // console.log(this.props.error);
+      content = (
+        <Text>{this.props.error}</Text>
+      )
+    }else{
+      content = (
+        <View>
+          <Text>Loading...</Text>
+          <ActivityIndicator
+            animating={true}
+            style={{height: 80}}
+            size="large"
+          />
+        </View>
+      )
+    }
     return(
       <Modal
         style={styles.modalContainer}
@@ -48,14 +67,9 @@ class GlobalModalBox extends Component{
         ref={'globalModalBox'}
         swipeToClose={false}
         onClosed={this._onClosed.bind(this)}
-        backdropPressToClose={false}
+        backdropPressToClose={this.props.error? true: false}
       >
-        <Text>Loading...</Text>
-        <ActivityIndicator
-          animating={true}
-          style={{height: 80}}
-          size="large"
-        />
+        {content}
 
       </Modal>
     )
@@ -74,7 +88,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return {
-    globalModal: state.ui.globalModal
+    globalModal: state.ui.globalModal,
+    error: state.ui.error
   }
 }
 

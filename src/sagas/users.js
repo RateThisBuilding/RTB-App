@@ -24,7 +24,11 @@ function* loginFlow(){
       yield put({type: actionTypes.CLOSE_GLOBAL_MODAL})
 
     }catch(error){
-      console.error(error)
+      // console.error(error)
+
+      // yield put({type: actionTypes.CLOSE_GLOBAL_MODAL})
+      yield put({type: actionTypes.OPEN_ERROR_MODAL, error: error.toString()})
+      // yield put({type: action})
     }
 
 
@@ -41,7 +45,7 @@ function* logoutFlow(){
     AsyncStorage.removeItem('@RateThisBuilding:session')
     yield put({type: actionTypes.USER_LOGOUT_SUCCESS})
     yield put({type: actionTypes.CLOSE_GLOBAL_MODAL})
-    
+
 
   }
 }
