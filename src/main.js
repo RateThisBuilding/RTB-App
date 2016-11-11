@@ -1,6 +1,6 @@
 // import external dependencies
 import React, { Component } from 'react';
-import { AsyncStorage } from 'react-native'
+import { AsyncStorage, StatusBar } from 'react-native'
 import { Provider } from 'react-redux'
 
 
@@ -25,6 +25,10 @@ AsyncStorage.getItem('@RateThisBuilding:session', (err, result)=>{
 })
 
 export default class Main extends Component {
+
+  componentWillMount(nextProps){
+    StatusBar.setBarStyle('light-content', true)
+  }
 
   render() {
     return (
