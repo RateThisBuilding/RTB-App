@@ -160,6 +160,7 @@ class AppRouter extends Component {
             schema="modal"
             direction="vertical"
             hideTabBar={true}
+            title={'Sign in'}
             {...this._commonSceneProps()}
           />
         </Scene>

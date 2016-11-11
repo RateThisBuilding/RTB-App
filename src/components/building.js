@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableHighlight, Animated } from 'react-native'
+import { View, Text, Image, TouchableHighlight, Animated, StyleSheet } from 'react-native'
 import { MKButton } from 'react-native-material-kit'
 import { Actions } from 'react-native-router-flux'
 
 import { starRendering } from '../renderHelpers'
-import Styles, { COLORS } from '../styles'
+import Styles, { COLORS, FULLWIDTH, FULLHEIGHT } from '../styles'
 
 export default class Building extends Component{
   constructor(props){
@@ -47,49 +47,113 @@ export default class Building extends Component{
       .build();
     const DetailsButton = MKButton.flatButton()
       .withTextStyle({ color: COLORS.SECONDARY, fontWeight: 'bold', fontSize: 11})
-      .withText('Details')
+      .withText('DETAILS')
       .withOnPress(() => {
         Actions.buildingDetails({ title:_building.title, building: _building});
       })
       .build();
 
     return (
-      <Animated.View style={[Styles.buildingComponent, {opacity: this.state.fadeAnim}]}>
+
+      <Animated.View style={[styles.buildingComponentWrapper,{opacity: this.state.fadeAnim}]}>
         <TouchableHighlight
-          style={{flex: 1}}
           onPress={() => {
             Actions.buildingDetails({ title:_building.title, building: _building});
           }}
+          style={{flex: 1}}
           underlayColor={'lightgray'}
         >
-          <View style={Styles.buildingComponentTouchable}>
-            <View>
+          <View style={styles.buildingComponentTouchable}>
+            <View style={{
+              flex: 3,
+              alignSelf: 'stretch',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'flex-end'
+            }}>
+              <Image
+                source={{uri: _building.banner.src}}
+                style={styles.buildingThumbnail}
+                resizeMode="cover"
+              />
+
+            </View>
+            <View style={{ flex: 1, alignItems: 'center'}}>
               <Text
-                style={{fontSize:11, fontWeight:'bold', textAlign: 'center'}}
-                adjustsFontSizeToFit={true}
+                style={[styles.buildingText, { fontSize:16, textAlign: 'center', color: 'black'}]}
                 numberOfLines={1}>
                 {_building.title}
               </Text>
+              <View style={{flexDirection: 'row'}}>
+                {starRendering(_building.rating)}
+              </View>
+              <Text
+                numberOfLines={1}
+                ellipsizeMode={'tail'}
+                style={[styles.buildingText,{fontSize:9}]}
+              >
+                {_building.address}
+              </Text>
             </View>
-            <Image
-              source={{uri: _building.banner.src}}
-              style={Styles.buildingThumbnail}
-            />
-            <View style={{flexDirection: 'row'}}>
-              {starRendering(_building.rating)}
-            </View>
-            <Text numberOfLines={1} ellipsizeMode={'middle'} style={{fontSize:9}}>{_building.address}</Text>
-            <View style={Styles.buildingComponentButtons}>
-              {/* <ReviewButton style={{height: 15}}/> */}
-              <DetailsButton style={{height: 15}}/>
+            <View style={styles.buildingComponentButtons}>
+              <DetailsButton/>
             </View>
           </View>
         </TouchableHighlight>
+
       </Animated.View>
-    );
+          );
   }
 }
 
 Building.propTypes = {
   building: React.PropTypes.object
 }
+
+const styles = StyleSheet.create({
+  buildingText : {
+    fontFamily: 'Roboto'
+  },
+  buildingComponentWrapper: {
+    width: (FULLWIDTH*.5)-10,
+    height: FULLHEIGHT*.38,
+    margin: 5,
+    alignItems: 'stretch',
+    // Material card styling
+    borderRadius: 2,
+    // borderWidth: 1,
+    elevation: 2,
+    shadowOpacity: 0.5,
+    shadowOffset: {
+      height: -1,
+      width: 1
+    },
+    // shadowColor: '#000000'
+  },
+  buildingComponentTouchable: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    alignSelf: 'stretch',
+    justifyContent: 'space-around',
+  },
+  buildingThumbnail: {
+    // flex:1,
+    // width:null,
+    // height:FULLHEIGHT*.20,
+    // alignSelf: 'stretch',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0
+  },
+  buildingComponentButtons: {
+    margin: 5,
+    height: 10,
+    flex:0.5,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignSelf: 'flex-start'
+  },
+})

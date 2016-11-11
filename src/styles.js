@@ -9,10 +9,11 @@ export const FULLHEIGHT = Dimensions.get('window').height;
 
 export const COLORS =  {
   THEME: '#FF6822',
-  SECONDARY: '#46AEFF',
+  SECONDARY: '#00B2A0',
   BLACK: '#000000',
   WHITE: '#FFFFFF',
-  STAR: '#FFE12C'
+  STAR: '#FFE12C',
+  GREY: '#BFBCBA'
 }
 
 export default StyleSheet.create({
@@ -40,26 +41,9 @@ export default StyleSheet.create({
     alignItems: 'center',
     marginBottom: 200
   },
-  buildingComponent:{
-    width: (FULLWIDTH*.5)-10,
-    height: FULLHEIGHT*.33,
-    margin: 5,
-    padding: 5,
 
-    // Material card styling
-    borderRadius: 2,
-    elevation: 2,
-    shadowOpacity: 0.5,
-    shadowOffset: {
-      height: 1,
-      width: 1
-    },
-    shadowColor: '#000000'
-  },
   buildingComponentTouchable: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'space-around',
+
   },
   buildingThumbnail: {
     width:FULLWIDTH*.37,
@@ -71,14 +55,7 @@ export default StyleSheet.create({
   buildingBanner: {
     height: FULLHEIGHT*.30
   },
-  buildingComponentButtons: {
-    width: FULLWIDTH*.40,
-    margin: 5,
-    height: 10,
-    flex:1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
+  
   formTitle: {
     marginTop: 10,
     color: '#000000',
