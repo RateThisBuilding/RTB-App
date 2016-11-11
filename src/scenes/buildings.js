@@ -1,21 +1,35 @@
 import React, { Component } from 'react';
-import { View, ListView, Text, StyleSheet } from 'react-native';
+import { View, ListView, Text, StyleSheet, NetInfo, TouchableOpacity } from 'react-native';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Actions } from 'react-native-router-flux'
 import GiftedListView from 'react-native-gifted-listview'
 import _ from 'underscore'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+
 
 import SceneContainer from '../components/sceneContainer'
 import Building from '../components/building'
 import { applySearchParams, clearSearchParams } from '../actions/buildingSearch'
-import Styles, { FULLWIDTH, FULLHEIGHT } from '../styles'
+import Styles, { FULLWIDTH, FULLHEIGHT, COLORS } from '../styles'
 import * as buildingSearchStrategies from '../helpers/searchStrategies'
 
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 class Buildings extends Component {
+
+  static propTypes = {
+    searchParams: React.PropTypes.object,
+    searchActive: React.PropTypes.bool
+  }
+  static renderRightButton(nav){
+    return nav.navigationState.index ? (
+      <TouchableOpacity onPress={Actions.pop} style={{justifyContent: 'center', alignItems: 'center'}}>
+        <MaterialIcons color={'#fff'} name="chevron-left" size={25} />
+      </TouchableOpacity>
+    ): null
+  }
 
   constructor(props){
     super(props);
@@ -29,6 +43,9 @@ class Buildings extends Component {
   componentDidMount(){
     // Need to preload modalbox in this scene since it will be first to load
     Actions.modalbox();
+    NetInfo.isConnected.fetch().then(isConnected => {
+      console.log('First, is ' + (isConnected ? 'online' : 'offline'));
+    });
   }
 
   componentWillReceiveProps(nextProps){
@@ -66,7 +83,7 @@ class Buildings extends Component {
       forceUpdate={this.state.forceUpdate} //This is
       sectionHeaderView={(sectionData, sectionID)=>{
         return (
-          <View style={{ backgroundColor: '#50a4ff', padding: 10, width: FULLWIDTH }}>
+          <View style={{ backgroundColor: COLORS.SECONDARY, padding: 10, width: FULLWIDTH }}>
             <Text style={{ color: '#fff', }}>
               {sectionID}
             </Text>
@@ -94,10 +111,6 @@ class Buildings extends Component {
   }
 }
 
-Buildings.propTypes = {
-  searchParams: React.PropTypes.object,
-  searchActive: React.PropTypes.bool
-}
 
 const styles = StyleSheet.create({
 

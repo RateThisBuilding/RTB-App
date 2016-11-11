@@ -63,6 +63,7 @@ export class TextField extends Component {
       <MKTextField
         multiline={this.props.multiline}
         style={this.props.multiline? styles.multiLineInputStyle : styles.textInputStyle}
+        textInputStyle={{fontFamily: 'Roboto'}}
         onTextChange={this.props.onTextChange}
         defaultValue={this.props.defaultText}
         password={this.props.password}
@@ -97,7 +98,8 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
+    fontFamily: 'Roboto'
   },
   textInputStyle: {
     marginTop: 10,

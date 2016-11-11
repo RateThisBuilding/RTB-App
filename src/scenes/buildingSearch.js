@@ -24,6 +24,8 @@ class BuildingSearch extends Component {
     searchParams: React.PropTypes.object,
     tempParams: React.PropTypes.object,
   }
+  
+
 
   constructor(props){
     super(props);
