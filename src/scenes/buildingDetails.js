@@ -133,7 +133,7 @@ class BuildingDetails extends Component {
       }
       return (
         <SceneContainer>
-          <ScrollView>
+          <ScrollView bounces={false}>
             <Image
               source={{uri: building.banner.src}}
               style={Styles.buildingBanner}
