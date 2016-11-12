@@ -39,22 +39,22 @@ export default class Building extends Component{
     const _building = this.state.building;
 
     const ReviewButton = MKButton.flatButton()
-      .withTextStyle({ color: COLORS.THEME, fontWeight: 'bold', fontSize: 11})
+      .withTextStyle([{ color: COLORS.THEME, fontWeight: 'bold', fontSize: 11},Styles.appFontFamily])
       .withText('Add a Review')
       .withOnPress(() => {
         Actions.review({ building: _building });
       })
       .build();
     const DetailsButton = MKButton.flatButton()
-      .withTextStyle({ color: COLORS.SECONDARY, fontWeight: 'bold', fontSize: 11})
+      .withTextStyle([{ color: COLORS.SECONDARY, fontWeight: 'bold', fontSize: 11}, Styles.appFontFamily])
       .withText('DETAILS')
       .withOnPress(() => {
         Actions.buildingDetails({ title:_building.title, building: _building});
       })
       .build();
 
+      console.log(_building);
     return (
-
       <Animated.View style={[styles.buildingComponentWrapper,{opacity: this.state.fadeAnim}]}>
         <TouchableHighlight
           onPress={() => {
@@ -80,7 +80,7 @@ export default class Building extends Component{
             </View>
             <View style={{ flex: 1, alignItems: 'center'}}>
               <Text
-                style={[styles.buildingText, { fontSize:16, textAlign: 'center', color: 'black'}]}
+                style={[Styles.appFontFamily, { fontSize:16, textAlign: 'center', color: 'black'}]}
                 numberOfLines={1}>
                 {_building.title}
               </Text>
@@ -90,7 +90,7 @@ export default class Building extends Component{
               <Text
                 numberOfLines={1}
                 ellipsizeMode={'tail'}
-                style={[styles.buildingText,{fontSize:9}]}
+                style={[Styles.appFontFamily,{fontSize:9}]}
               >
                 {_building.address}
               </Text>
@@ -111,12 +111,9 @@ Building.propTypes = {
 }
 
 const styles = StyleSheet.create({
-  buildingText : {
-    fontFamily: 'Roboto'
-  },
   buildingComponentWrapper: {
     width: (FULLWIDTH*.5)-10,
-    height: FULLHEIGHT*.38,
+    height: FULLHEIGHT*.35,
     margin: 5,
     alignItems: 'stretch',
     // Material card styling
@@ -125,8 +122,8 @@ const styles = StyleSheet.create({
     elevation: 2,
     shadowOpacity: 0.5,
     shadowOffset: {
-      height: -1,
-      width: 1
+      height: 2,
+      width: -1
     },
     // shadowColor: '#000000'
   },

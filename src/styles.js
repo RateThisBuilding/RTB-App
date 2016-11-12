@@ -17,6 +17,9 @@ export const COLORS =  {
 }
 
 export default StyleSheet.create({
+  appFontFamily: {
+    fontFamily: 'Roboto'
+  },
   container: {
     flex: 1,
     flexDirection: 'column',
@@ -55,7 +58,7 @@ export default StyleSheet.create({
   buildingBanner: {
     height: FULLHEIGHT*.30
   },
-  
+
   formTitle: {
     marginTop: 10,
     color: '#000000',

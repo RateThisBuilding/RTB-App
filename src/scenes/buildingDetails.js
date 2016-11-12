@@ -143,7 +143,7 @@ class BuildingDetails extends Component {
               <Text
                 numberOfLines={1}
                 adjustsFontSizeToFit={true}
-                style={[{fontSize: 35}, Styles.headingsMargin]}
+                style={[{fontSize: 35}, Styles.headingsMargin, Styles.appFontFamily]}
                 minimumFontScale={0.7}
               >
                 {building.title}

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-import { COLORS } from '../../styles'
+import Styles, { COLORS } from '../../styles'
 
 export default class InfoBlock extends Component {
 
@@ -15,17 +15,17 @@ export default class InfoBlock extends Component {
   render() {
     return (
       <View style={styles.infoBlockContainer}>
-        <Text>
+        <Text style={Styles.appFontFamily}>
           <Ionicons color={COLORS.BLACK} name="md-home" />
           &nbsp;&nbsp;&nbsp;
           {this.props.address}
         </Text>
-        <Text>
+        <Text style={Styles.appFontFamily}>
           <Ionicons color={COLORS.BLACK} name="md-call" />
           &nbsp;&nbsp;&nbsp;
           {this.props.phone || "Not Provided"}
         </Text>
-        <Text>
+        <Text style={Styles.appFontFamily}>
           <Ionicons color={COLORS.BLACK} name="md-globe" />
           &nbsp;&nbsp;&nbsp;
           {this.props.website || "Not Provided"}
@@ -38,5 +38,6 @@ export default class InfoBlock extends Component {
 const styles = StyleSheet.create({
   infoBlockContainer: {
     padding: 5
-  }
+  },
+
 })

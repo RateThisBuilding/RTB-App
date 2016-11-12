@@ -6,7 +6,7 @@ import Styles from '../styles'
 export class Title extends Component{
   render() {
     return(
-      <Text style={[{fontSize: this.props.subTitle? 25: 35, fontFamily: 'Helvetica'}, Styles.headingsMargin]}>{this.props.text}</Text>
+      <Text style={[{fontSize: this.props.subTitle? 25: 35,}, Styles.appFontFamily, Styles.headingsMargin]}>{this.props.text}</Text>
     )
   }
 }
