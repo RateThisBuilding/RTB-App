@@ -28,6 +28,8 @@ import { COLORS } from './styles'
 
 // TODO: Find a solution that doesn't require importing the reducer directly
 
+const NAVBAR_BUTTON_SIZE = 30
+
 class AppRouter extends Component {
 
   static propTypes = {
@@ -46,8 +48,8 @@ class AppRouter extends Component {
   }
   _renderBackButton(nav) {
     return nav.navigationState.index ? (
-      <TouchableOpacity onPress={Actions.pop} style={{justifyContent: 'center', alignItems: 'center'}}>
-        <MaterialIcons color={'#fff'} name="chevron-left" size={25} />
+      <TouchableOpacity onPress={Actions.pop} style={{justifyContent: 'center', alignItems: 'stretch'}}>
+        <MaterialIcons color={'#fff'} name="chevron-left" size={NAVBAR_BUTTON_SIZE} />
       </TouchableOpacity>
     ): null
   }
@@ -91,7 +93,7 @@ class AppRouter extends Component {
                 renderRightButton={()=>{
                   return (
                     <TouchableOpacity onPress={Actions.buildingSearch} style={{justifyContent: 'center', alignItems: 'center'}}>
-                      <MaterialIcons color={'#fff'} name="search" size={25} />
+                      <MaterialIcons color={'#fff'} name="search" size={NAVBAR_BUTTON_SIZE} />
                     </TouchableOpacity>
                   )
                 }}
