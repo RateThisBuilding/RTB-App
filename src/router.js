@@ -1,6 +1,6 @@
 // import external dependencies
 import React, { Component } from 'react';
-import {  Text, StyleSheet, TouchableOpacity } from 'react-native'
+import {  StyleSheet, TouchableOpacity } from 'react-native'
 import {  bindActionCreators,  } from 'redux'
 import { connect } from 'react-redux'
 import { Scene, Router, Modal, Actions } from 'react-native-router-flux';
@@ -81,6 +81,7 @@ class AppRouter extends Component {
               key="buildingsTab"
               selectedIconStyle={Styles.tabIconSelected}
               initial={true}
+              title="Building"
               icon={Tab_HomeIcon}
             >
               <Scene
